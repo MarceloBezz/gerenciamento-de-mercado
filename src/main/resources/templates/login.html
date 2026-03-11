@@ -4,12 +4,25 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="login-container">
 
         <h2>Login</h2>
+
+        <div th:if="${error}">
+            <div class="alert alert-danger" role="alert">
+                Login incorreto!
+            </div>
+        </div>
+        <div th:if="${logout}">
+            <div class="alert alert-warning" role="alert">
+                Logout realizado com sucesso!
+            </div>
+        </div>
 
         <form th:action="@{/login}" method="post">
 
