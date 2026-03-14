@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de ERP</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <h2 class="logo">Sistema de ERP</h2>
+
+    <nav>
+        <ul>
+            <div sec:authorize="hasRole('ESTOQUISTA')">
+                <li>Estoque</li>
+            </div>
+            <div sec:authorize="hasRole('CAIXA')">
+                <li>Caixa</li>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <li>Gerenciar funcionários</li>
+                <li>Balanço financeiro</li>
+                <li>Vendas</li>
+            </div>
+            <li class="active">Meus dados</li>
+        </ul>
+    </nav>
+</aside>
+
+<!-- Conteúdo principal -->
+<div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+        <h1 th:text="Olá, ${usuario.nome}"></h1>
+
+        <div class="user">
+            <span>Admin</span>
+            <img src="https://i.pravatar.cc/40" alt="avatar">
+        </div>
+    </header>
+
+    <!-- Cards -->
+    <section class="cards">
+
+        <div class="card">
+            <h3>Título</h3>
+            <p>Valor</p>
+        </div>
+
+        <div class="card">
+            <h3>Título</h3>
+            <p>Valor</p>
+        </div>
+
+        <div class="card">
+            <h3>Título</h3>
+            <p>Valor</p>
+        </div>
+
+        <div class="card">
+            <h3>Título</h3>
+            <p>Valor</p>
+        </div>
+
+    </section>
+
+    <!-- Tabela -->
+    <section class="table-section">
+
+        <h2>Registros recentes</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>#</td>
+                    <td>---</td>
+                    <td><span class="status ok">OK</span></td>
+                    <td>---</td>
+                </tr>
+
+                <tr>
+                    <td>#</td>
+                    <td>---</td>
+                    <td><span class="status pending">Pendente</span></td>
+                    <td>---</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+</body>
+</html>
