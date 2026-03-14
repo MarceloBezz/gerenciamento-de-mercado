@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<aside th:fragment="barra-lateral" class="sidebar">
+    <h2 class="logo">Sistema de ERP</h2>
+
+    <nav>
+        <ul>
+            <div sec:authorize="hasRole('ESTOQUISTA')">
+                <a th:href="@{/estoque}"><li>Estoque</li></a>
+            </div>
+            <div sec:authorize="hasRole('CAIXA')">
+                <a th:href="@{/caixa}"><li>Caixa</li></a>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/funcionarios}"><li>Gerenciar funcionários</li></a>
+                <a th:href="@{/balanco-fianceiro}"><li>Balanço financeiro</li></a>
+                <a th:href="@{/vendas}"><li>Vendas</li></a>
+            </div>
+            <a th:href="@{/meus-dados}"><li>Meus dados</li></a>
+        </ul>
+    </nav>
+</aside>
+</body>
+</html>
