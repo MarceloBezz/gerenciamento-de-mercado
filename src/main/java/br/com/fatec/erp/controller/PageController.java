@@ -21,11 +21,7 @@ public class PageController {
 
     @GetMapping("/home")
     public String getMethodName(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
-        try {
             model.addAttribute("usuario", usuario.getUsuario());
             return "home";
-        } catch (Exception e) {
-            return "redirect:/login";
-        }
     }
 }
