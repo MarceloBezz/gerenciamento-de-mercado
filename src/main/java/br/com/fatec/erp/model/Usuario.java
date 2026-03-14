@@ -23,13 +23,17 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
-    public Usuario(String email, String senha, Cargo cargo) {
+    public Usuario(String email, String senha, Cargo cargo, String nome) {
         this.email = email;
         this.senha = senha;
         this.cargo = cargo;
     }
 
     public Usuario() {
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public Long getId() {

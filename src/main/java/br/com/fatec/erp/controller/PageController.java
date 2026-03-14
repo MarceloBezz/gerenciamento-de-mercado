@@ -1,5 +1,7 @@
 package br.com.fatec.erp.controller;
 
+import br.com.fatec.erp.security.UsuarioSecurity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PageController {
     @GetMapping({"/login", "/"})
     public String login(@RequestParam(required = false) String logout,
-            @RequestParam(required = false) String error, Model model) {
+                        @RequestParam(required = false) String error, Model model) {
         if (logout != null)
             model.addAttribute("logout", logout);
         if (error != null)
@@ -18,7 +20,12 @@ public class PageController {
     }
 
     @GetMapping("/home")
-    public String getMethodName() {
-        return "home";
+    public String getMethodName(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
+        try {
+            model.addAttribute("usuario", usuario.getUsuario());
+            return "home";
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
     }
 }
