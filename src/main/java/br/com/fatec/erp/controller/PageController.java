@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
-
     @GetMapping({"/login", "/"})
     public String login(@RequestParam(required = false) String logout,
             @RequestParam(required = false) String error, Model model) {
@@ -22,6 +21,4 @@ public class PageController {
     public String getMethodName() {
         return "home";
     }
-    
-
 }
