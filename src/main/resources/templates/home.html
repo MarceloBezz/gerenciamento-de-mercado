@@ -20,9 +20,27 @@
     <header class="topbar">
         <h1 th:text="|Olá, ${usuario.nome}|"></h1>
 
-        <div class="user">
-            <span>Admin</span>
-            <img src="https://i.pravatar.cc/40" alt="avatar">
+        <div class="user-menu">
+
+            <button class="user-trigger" onclick="toggleUserMenu()">
+                <span th:text="${usuario.nome}"></span>
+                <img src="https://i.pravatar.cc/40" alt="avatar">
+            </button>
+
+            <div class="dropdown-menu" id="userDropdown">
+
+                <a th:href="@{/meus-dados}">
+                    Meus dados
+                </a>
+
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">
+                        Logout
+                    </button>
+                </form>
+
+            </div>
+
         </div>
     </header>
 
@@ -87,6 +105,6 @@
     </section>
 
 </div>
-
+<script th:src="@{/js/home.js}"></script>
 </body>
 </html>

@@ -132,3 +132,67 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
+/* ===== MENU DO USUÁRIO ===== */
+
+.user-menu{
+    position:relative;
+}
+
+.user-trigger{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.user-trigger img{
+    border-radius:50%;
+}
+
+
+
+/* ===== DROPDOWN ===== */
+
+.dropdown-menu{
+    position:absolute;
+    right:0;
+    top:50px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    width:160px;
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+}
+
+.dropdown-menu a,
+.dropdown-menu button{
+    padding:12px 15px;
+    border:none;
+    background:none;
+    text-align:left;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover{
+    background:#f5f6fa;
+}
+
+.logout-btn{
+    width:100%;
+}
+
+
+
+/* ===== MENU VISÍVEL ===== */
+
+.dropdown-menu.show{
+    display:flex;
+}
