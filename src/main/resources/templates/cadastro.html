@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+        xmlns:th="http://www.thymeleaf.org"
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Funcionario</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro.css}">
+</head>
+
+<body>
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="logo-container">
+            <h2 class="logo">Sistema de ERP</h2>
+        </div>
+        <div class="user">
+            <span>Admin</span>
+            <img src="https://i.pravatar.cc/40" alt="avatar">
+        </div>
+    </header>
+
+
+
+    <div class="cadastro-container">
+        <div class="fundo">
+            <h2>Insira os dados do colaborador</h2>
+            <div class="dados">
+
+                <div class="input-group">
+                    <label>Nome</label>
+                    <input type="name" name="nome" placeholder="Digite o nome do colaborador" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Digite o email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" name="senha" placeholder="Digite a senha" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Cargo</label>
+                    <select name="cargo">
+                        <option>Caixa</option>
+                        <option>Estoquista</option>
+                        <option>Admin</option>
+                    </select>
+                </div>
+
+                <button class="cadastro" type="submit">Cadastrar</button>
+                <button class="cancelar" type="submit">Cancelar</button>
+                <button class="apagar" type="reset" title="Limpar formulário">
+                    <img src="img/borracha.png" alt="Limpar" class="icone-borracha">
+                </button>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

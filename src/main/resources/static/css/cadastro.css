@@ -1,0 +1,168 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+/* Topbar */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.user img {
+    border-radius: 50%;
+}
+
+.cadastro-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.fundo {
+    margin-top: 100px;
+    display: inline-block;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 800px;
+    min-height: 300px;
+    box-sizing: border-box;
+}
+
+.dados {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 40px;
+    align-items: start;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 40px;
+    background-color: white;
+}
+
+.logo-container{
+    display: inline-block;
+    
+}
+
+.logo {
+    color: #ffffff;
+    background-color: #0f172a;
+    padding: 15px 25px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 0 0 8px 0;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+.cadastro {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    /* Faz o botão ocupar a largura da coluna dele */
+    max-width: 200px;
+    /* Limita para não ficar um botão gigante */
+    justify-self: center;
+    /* Centraliza o botão dentro da coluna do grid */
+    height: 45px
+}
+
+.cadastro:hover {
+    background-color: #0056b3;
+}
+
+.cancelar {
+    padding: 10px;
+    border: none;
+    background-color: #575252;
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    /* Faz o botão ocupar a largura da coluna dele */
+    max-width: 200px;
+    /* Limita para não ficar um botão gigante */
+    justify-self: center;
+    /* Centraliza o botão dentro da coluna do grid */
+    height: 45px
+}
+
+.cancelar:hover {
+    background-color: rgb(255, 0, 0);
+}
+
+.apagar{
+    background-color: #f8f9fa; /* Fundo cinza claro */
+    border: 1px solid #dee2e6;  /* Borda suave */
+    border-radius: 8px;         /* Cantos arredondados */
+    width: 44px;                /* Largura fixa do botão */
+    height: 44px;               /* Altura fixa do botão */
+    display: flex;              /* Para centralizar o ícone */
+    align-items: center;        /* Centraliza verticalmente */
+    justify-content: center;    /* Centraliza horizontalmente */
+    cursor: pointer;            /* Indica que é clicável */
+    transition: all 0.2s ease;  /* Transição suave para hover */
+    padding: 0;
+}
+
+.apagar:hover{
+    background-color: #e9ecef;  /* Fundo um pouco mais escuro no hover */
+    border-color: #adb5bd;
+}
+
+.icone-borracha{
+    width: 40px;   /* Tamanho do ícone (ajuste conforme a sua imagem) */
+    height: 40px;  /* Tamanho do ícone */
+    object-fit: contain; /* Garante que a imagem se encaixe sem cortar */
+    filter: grayscale(100%) brightness(50%); /* Deixa a imagem cinza escuro */
+    transition: filter 0.2s ease; /* Transição para o filtro */
+}
+
+.icone-borracha:hover{
+    filter: grayscale(100%) brightness(30%);
+}
