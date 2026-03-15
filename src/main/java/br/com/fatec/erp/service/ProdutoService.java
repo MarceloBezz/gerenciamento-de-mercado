@@ -26,7 +26,7 @@ public class ProdutoService {
 
     public Produto salvarProduto(ProdutoDTO dto) {
         Produto produto = new Produto(dto.nome(), dto.valor(), dto.descricao());
-        Estoque estoque = new Estoque(produto, 0);
+        Estoque estoque = new Estoque(produto, 0, dto.quantidadeMinimaEstoque());
         estoqueRepository.save(estoque);
         return produtoRepository.save(produto);
     }
