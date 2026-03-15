@@ -3,6 +3,7 @@ package br.com.fatec.erp.service;
 import java.util.List;
 
 import br.com.fatec.erp.model.Estoque;
+import br.com.fatec.erp.model.dto.ProdutoDTO;
 import br.com.fatec.erp.repository.EstoqueRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,8 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Produto salvarProduto(Produto produto) {
+    public Produto salvarProduto(ProdutoDTO dto) {
+        Produto produto = new Produto(dto.nome(), dto.valor(), dto.descricao());
         Estoque estoque = new Estoque(produto, 0);
         estoqueRepository.save(estoque);
         return produtoRepository.save(produto);

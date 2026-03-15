@@ -40,7 +40,7 @@ public class Configuracoes {
                             .logoutUrl("/logout")
                             .logoutSuccessUrl("/login?logout");
                 })
-//                .csrf(AbstractHttpConfigurer::disable)
+                // .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 
