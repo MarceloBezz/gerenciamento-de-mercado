@@ -1,5 +1,6 @@
 package br.com.fatec.erp.model;
 
+import br.com.fatec.erp.model.dto.UsuarioDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,15 +19,16 @@ public class Usuario {
     private String nome;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(nullable= false)
+    @Column(nullable = false)
     private String senha;
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
-    public Usuario(String email, String senha, Cargo cargo, String nome) {
-        this.email = email;
-        this.senha = senha;
-        this.cargo = cargo;
+    public Usuario(UsuarioDTO dto) {
+        this.email = dto.email();
+        this.nome = dto.nome();
+        this.senha = dto.senha();
+        this.cargo = dto.cargo();
     }
 
     public Usuario() {
@@ -50,5 +52,13 @@ public class Usuario {
 
     public Cargo getCargo() {
         return cargo;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 }
