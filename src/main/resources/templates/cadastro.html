@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-        xmlns:th="http://www.thymeleaf.org"
+<html
+        xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,27 +9,42 @@
 </head>
 
 <body>
-    <!-- Topbar -->
-    <header class="topbar">
-        <div class="logo-container">
-            <h2 class="logo">Sistema de ERP</h2>
-        </div>
-        <div class="user">
-            <span>Admin</span>
-            <img src="https://i.pravatar.cc/40" alt="avatar">
-        </div>
-    </header>
+<!-- Topbar -->
+<header class="topbar">
+    <div class="logo-container">
+        <h2 class="logo">Sistema de ERP</h2>
+    </div>
+    <div class="user">
+        <span th:text="${usuario.usuario.nome}"></span>
+        <img src="https://i.pravatar.cc/40" alt="avatar">
+    </div>
+</header>
 
+<div class="alert-container">
 
+    <div th:if="${sucesso}" class="alert alert-sucesso">
+        <span th:text="${sucesso}"></span>
+    </div>
 
-    <div class="cadastro-container">
+    <div th:if="${erro}" class="alert alert-erro">
+        <span th:text="${erro}"></span>
+    </div>
+
+</div>
+
+<div class="cadastro-container">
+    <form th:action="@{/funcionarios/cadastrar}" method="post" th:object="${usuario}" id="formProduto">
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
         <div class="fundo">
             <h2>Insira os dados do colaborador</h2>
             <div class="dados">
 
                 <div class="input-group">
                     <label>Nome</label>
-                    <input type="name" name="nome" placeholder="Digite o nome do colaborador" required>
+                    <input type="text" name="nome" placeholder="Digite o nome do colaborador" required>
                 </div>
 
                 <div class="input-group">
@@ -45,21 +60,22 @@
                 <div class="input-group">
                     <label>Cargo</label>
                     <select name="cargo">
-                        <option>Caixa</option>
-                        <option>Estoquista</option>
-                        <option>Admin</option>
+                        <option value="CAIXA">Caixa</option>
+                        <option value="ESTOQUISTA">Estoquista</option>
+                        <option value="ADMIN">Admin</option>
                     </select>
                 </div>
 
                 <button class="cadastro" type="submit">Cadastrar</button>
-                <button class="cancelar" type="submit">Cancelar</button>
+                <button class="cancelar">Cancelar</button>
                 <button class="apagar" type="reset" title="Limpar formulário">
                     <img src="img/borracha.png" alt="Limpar" class="icone-borracha">
                 </button>
             </div>
-        </div>
+        </form>
+</div>
 
-    </div>
+</div>
 </body>
 
 </html>

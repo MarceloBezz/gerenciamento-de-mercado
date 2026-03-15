@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.fatec.erp.model.Usuario;
 import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.repository.UsuarioRepository;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Service // @Service indica que esta classe pertence à camada de regras de negócio.
 // O Spring cria e gerencia automaticamente um objeto dessa classe (Bean)
@@ -35,11 +36,11 @@ public class UsuarioService {
         return false;
     }
 
-    public Usuario cadastrar(UsuarioDTO dto) {
+    public Usuario cadastrar(UsuarioDTO dto) throws Exception {
         Usuario usuario = new Usuario(dto);
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         if (usuarioRepository.existsByEmailIgnoringCase(usuario.getEmail())) {
-            return null;
+            throw new Exception("Usuário já cadastrado!");
         }
         return usuarioRepository.save(usuario);
     }

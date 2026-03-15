@@ -1,6 +1,7 @@
 package br.com.fatec.erp.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fatec.erp.model.dto.UsuarioDTO;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -18,15 +20,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping("/cadastrar")
-    public String postMethodName(@Valid @RequestBody UsuarioDTO dto) {
-        try {
-            usuarioService.cadastrar(dto);
-            return  "Cadastrado com sucesso";
-        } catch (Exception e) {
-            return "erro no cadastro";
-        }
-    }
+
 
 
 }
