@@ -2,6 +2,8 @@ package br.com.fatec.erp.service;
 
 import java.util.List;
 
+import br.com.fatec.erp.model.Estoque;
+import br.com.fatec.erp.repository.EstoqueRepository;
 import org.springframework.stereotype.Service;
 
 import br.com.fatec.erp.model.Produto;
@@ -9,18 +11,25 @@ import br.com.fatec.erp.repository.ProdutoRepository;
 
 @Service
 public class ProdutoService {
-    private ProdutoRepository  produtoRepository;
+    private final ProdutoRepository produtoRepository;
+    private final EstoqueRepository estoqueRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository){
+    public ProdutoService(ProdutoRepository produtoRepository, EstoqueRepository estoqueRepository) {
         this.produtoRepository = produtoRepository;
+        this.estoqueRepository = estoqueRepository;
     }
-    public List<Produto> listarProdutos(){
+
+    public List<Produto> listarProdutos() {
         return produtoRepository.findAll();
     }
-    public Produto salvarProduto(Produto produto){
+
+    public Produto salvarProduto(Produto produto) {
+        Estoque estoque = new Estoque(produto, 0);
+        estoqueRepository.save(estoque);
         return produtoRepository.save(produto);
     }
-    public void deletarProduto(Long id){
+
+    public void deletarProduto(Long id) {
         produtoRepository.deleteById(id);
     }
 }
