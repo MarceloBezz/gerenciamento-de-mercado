@@ -3,7 +3,12 @@ package br.com.fatec.erp.service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import br.com.fatec.erp.model.Usuario;
+import br.com.fatec.erp.model.dto.UsuarioDTO;
+import br.com.fatec.erp.repository.UsuarioRepository;
 
 @Service // @Service indica que esta classe pertence à camada de regras de negócio.
 // O Spring cria e gerencia automaticamente um objeto dessa classe (Bean)
@@ -12,8 +17,30 @@ import org.springframework.stereotype.Service;
 // esse objeto através de Injeção de Dependência, sem precisar criá-lo manualmente.
 public class UsuarioService {
 
-    private void validarSenha(String senha) {
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    private boolean validarSenha(String senha) {
         Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()]).{8,}$");
-        Matcher matcher = pattern.matcher(senha); 
+        Matcher matcher = pattern.matcher(senha);
+
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
+    }
+
+    public Usuario cadastrar(UsuarioDTO dto) {
+        Usuario usuario = new Usuario(dto);
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        if (usuarioRepository.existsByEmailIgnoringCase(usuario.getEmail())) {
+            return null;
+        }
+        return usuarioRepository.save(usuario);
     }
 }
