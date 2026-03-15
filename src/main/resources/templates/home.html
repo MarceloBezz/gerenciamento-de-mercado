@@ -18,12 +18,12 @@
 
     <!-- Topbar -->
     <header class="topbar">
-        <h1 th:text="|Olá, ${usuario.nome}|"></h1>
+        <h1 th:text="|Olá, ${usuario.usuario.nome}|"></h1>
 
         <div class="user-menu">
 
             <button class="user-trigger" onclick="toggleUserMenu()">
-                <span th:text="${usuario.nome}"></span>
+                <span th:text="${usuario.usuario.nome}"></span>
                 <img src="https://i.pravatar.cc/40" alt="avatar">
             </button>
 
@@ -38,9 +38,7 @@
                         Logout
                     </button>
                 </form>
-
             </div>
-
         </div>
     </header>
 

@@ -21,7 +21,7 @@ public class PageController {
 
     @GetMapping("/home")
     public String getMethodName(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
-            model.addAttribute("usuario", usuario.getUsuario());
+            model.addAttribute("usuario", usuario);
             return "home";
     }
 }
