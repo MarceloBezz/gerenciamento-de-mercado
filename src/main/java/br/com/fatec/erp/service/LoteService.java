@@ -31,4 +31,17 @@ public class LoteService {
         estoque.setQuantidade(estoque.getQuantidade() + dto.quantidade());
         return lote;
     }
+
+    @Transactional
+    public void substituirLote(Long id, LoteDTO dto) {
+        Lote lote = loteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Lote não encontrado!"));
+        Lote novoLote = new Lote(dto, lote.getProduto());
+
+        Estoque estoque = estoqueRepository.findByProduto(lote.getProduto()).orElseThrow();
+        estoque.setQuantidade(estoque.getQuantidade() + (novoLote.getQuantidade() - lote.getQuantidade()));
+
+        loteRepository.delete(lote);
+        loteRepository.save(novoLote);
+    }
 }
