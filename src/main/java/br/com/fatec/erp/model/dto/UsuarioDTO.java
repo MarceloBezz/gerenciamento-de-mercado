@@ -6,9 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record UsuarioDTO(
-        @NotBlank String nome ,
-        @Email String email,
-        @NotBlank String senha,
-        @NotNull Cargo cargo) {
+        @NotBlank(message = "Preencha o nome do usuário!")
+        String nome,
+        @Email(message = "Formato de email inválido!")
+        @NotBlank(message = "Preencha o email do usuário!")
+        String email,
+        @NotBlank(message = "Preencha a senha do usuário!")
+        String senha,
+        @NotNull(message = "Preencha o cargo do usuário!")
+        Cargo cargo) {
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,19 +42,26 @@ public class PageController {
     @GetMapping("/cadastrar")
     public String cadastrarFuncionario(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
         model.addAttribute("usuario", usuario);
+        if (!model.containsAttribute("usuarioDTO")) {
+            model.addAttribute("usuarioDTO", new UsuarioDTO(null, null, null, null));
+        }
         return "cadastro";
     }
 
     @PostMapping("/funcionarios/cadastrar")
-    public String cadastrarFuncionario(@Valid UsuarioDTO dto, RedirectAttributes redirect) {
-        try {
-            usuarioService.cadastrar(dto);
-            redirect.addFlashAttribute("sucesso", "Usuário cadastrado com sucesso!");
-        } catch (Exception e) {
-            redirect.addFlashAttribute("erro", "Erro ao cadastrar usuário: Email já cadastrado!");
+    public String cadastrarFuncionario(@Valid UsuarioDTO usuarioDTO, BindingResult result, RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            return "cadastro";
         }
 
-        return "redirect:/cadastrar";
+        try {
+            usuarioService.cadastrar(usuarioDTO);
+            redirect.addFlashAttribute("sucesso", "Usuário cadastrado com sucesso!");
+            return "redirect:/cadastrar";
+        } catch (Exception e) {
+            result.rejectValue("email", "email", "Email já cadastrado!");
+            return "cadastro";
+        }
     }
     
 }

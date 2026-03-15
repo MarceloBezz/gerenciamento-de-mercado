@@ -195,3 +195,8 @@ select {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
