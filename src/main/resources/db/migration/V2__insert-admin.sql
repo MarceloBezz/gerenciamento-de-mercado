@@ -1,1 +1,1 @@
-INSERT INTO usuario VALUES (1, 'ADM', '$2a$10$SOEsoiPMYBS1H8at6K3Hruj.KiZkmOq3YydnXA86zegbQb1vRgkoi', 'admin@admin.com', true, 'ADM');
+INSERT INTO usuario VALUES (1, 'Administrador', '$2a$10$SOEsoiPMYBS1H8at6K3Hruj.KiZkmOq3YydnXA86zegbQb1vRgkoi', 'admin@admin.com', true, 'ADMIN');

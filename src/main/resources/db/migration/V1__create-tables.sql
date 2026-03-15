@@ -1,7 +1,7 @@
 -- Tabela de Usuários
 
 CREATE TABLE usuario (
-    id_usu SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(255),
     senha VARCHAR(255),
     email VARCHAR(155) UNIQUE,
@@ -16,43 +16,41 @@ CREATE TABLE usuario (
 -- Tabela de Produtos
 
 CREATE TABLE produto (
-    id_prod SERIAL PRIMARY KEY,
-    nome VARCHAR(255),
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    descricao VARCHAR(255),
     valor NUMERIC(10,2),
-    estoque_saldo INTEGER,
-    data_validade DATE,
 
-    CONSTRAINT valor_negativo CHECK (valor >= 0),
-    CONSTRAINT saldo_negativo CHECK (estoque_saldo >= 0)
+    CONSTRAINT valor_negativo CHECK (valor >= 0)
 );
 
 -- Tabela de pontos
 
 CREATE TABLE ponto (
-    id_ponto SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     usuario_id INTEGER,
     data DATE,
     hora_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    hora_saida TIME,
+    hora_saida TIMESTAMP,
 
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usu)
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
 -- Tabela de vendas
 
 CREATE TABLE venda (
-    id_vend SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_vendedor INTEGER,
-    data DATE,
+    data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total NUMERIC(10,2) DEFAULT 0,
 
-    FOREIGN KEY (id_vendedor) REFERENCES usuario(id_usu)
+    FOREIGN KEY (id_vendedor) REFERENCES usuario(id)
 );
 
 -- Tabela relacional de vendas e produtos
 
 CREATE TABLE venda_produto (
-    id_venda_produto SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     quantidade INTEGER,
     id_produto INTEGER,
     id_venda INTEGER,
@@ -60,19 +58,35 @@ CREATE TABLE venda_produto (
 
     CONSTRAINT quantidade_positiva CHECK (quantidade > 0),
 
-    FOREIGN KEY (id_produto) REFERENCES produto(id_prod),
-    FOREIGN KEY (id_venda) REFERENCES venda(id_vend)
+    FOREIGN KEY (id_produto) REFERENCES produto(id),
+    FOREIGN KEY (id_venda) REFERENCES venda(id)
 );
 
 -- Tabela de log
 
 CREATE TABLE log_produto (
-    id_log SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_produto INTEGER,
     operacao VARCHAR(10),
     data_operacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     valor_antigo NUMERIC(10,2),
     valor_novo NUMERIC(10,2)
+);
+
+CREATE TABLE estoque (
+    id_produto INTEGER PRIMARY KEY,
+    quantidade INTEGER,
+
+    FOREIGN KEY (id_produto) REFERENCES produto(id)
+);
+
+CREATE TABLE lote (
+    id SERIAL PRIMARY KEY,
+    id_produto INTEGER,
+    quantidade INTEGER,
+    validade DATE,
+
+    FOREIGN KEY (id_produto) REFERENCES produto(id)
 );
 
 --Funções e Triggers
@@ -84,7 +98,7 @@ BEGIN
 
 UPDATE VENDA
 SET TOTAL = COALESCE(TOTAL,0) + (NEW.QUANTIDADE * NEW.VALOR)
-WHERE ID_VEND = NEW.ID_VENDA;
+WHERE ID = NEW.ID_VENDA;
 
 RETURN NEW;
 
@@ -100,13 +114,13 @@ EXECUTE FUNCTION ATUALIZAR_TOTAL_VENDA();
 
 -- Função para baixar estoque
 
-CREATE OR REPLACE FUNCTION BAIXAR_ESTOQUE()
+CREATE OR REPLACE FUNCTION baixar_estoque()
 RETURNS TRIGGER AS $$
 BEGIN
 
-UPDATE PRODUTO
-SET ESTOQUE_SALDO = ESTOQUE_SALDO - NEW.QUANTIDADE
-WHERE ID_PROD = NEW.ID_PRODUTO;
+UPDATE estoque
+SET quantidade = quantidade - NEW.quantidade
+WHERE id_produto = NEW.id_produto;
 
 RETURN NEW;
 
@@ -115,10 +129,10 @@ $$ LANGUAGE plpgsql;
 
 -- Trigger para baixar estoque
 
-CREATE TRIGGER TRIGGER_BAIXAR_ESTOQUE
-AFTER INSERT ON VENDA_PRODUTO
+CREATE TRIGGER trigger_baixar_estoque
+AFTER INSERT ON venda_produto
 FOR EACH ROW
-EXECUTE FUNCTION BAIXAR_ESTOQUE();
+EXECUTE FUNCTION baixar_estoque();
 
 -- Função para registrar log de alteração do produto
 
@@ -133,7 +147,7 @@ INSERT INTO LOG_PRODUTO (
     VALOR_NOVO
 )
 VALUES (
-    OLD.ID_PROD,
+    OLD.ID,
     'UPDATE',
     OLD.VALOR,
     NEW.VALOR
