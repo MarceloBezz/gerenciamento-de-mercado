@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/estoque.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+
+<body>
+<div th:replace="~{fragments/fragments :: barra-lateral}"></div>
+<div class="main">
+    <section class="conteudo">
+
+        <h1 class="titulo-pagina">Produtos</h1>
+
+        <section class="cards">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-boxes card-icon"></i>
+                    <h3>Total de Produtos</h3>
+                </div>
+                <p id="valor-totalProdutos">320</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-exclamation-triangle card-icon"></i>
+                    <h3>Estoque Baixo</h3>
+                </div>
+                <p id="valor-estoque-baixo">12</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-clock-history card-icon"></i>
+                    <h3>Vencidos</h3>
+                </div>
+                <p id="valor-vencidos">5</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-currency-dollar card-icon"></i>
+                    <h3>Valor Total</h3>
+                </div>
+                <p id="valor-valor-total">$54,320</p>
+            </div>
+        </section>
+
+        <section class="barra-acoes">
+
+            <input type="text" placeholder="Buscar produto..." class="input-busca">
+
+            <select class="filtro-status">
+                <option>Todos</option>
+                <option>Normal</option>
+                <option>Estoque Baixo</option>
+                <option>Vencido</option>
+            </select>
+
+            <button class="btn-novo-produto">+ Novo Produto</button>
+
+        </section>
+
+        <section class="tabela-produtos">
+
+            <table id="tabela-produtos">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th>Descrição</th>
+                    <th>Estoque Mínimo</th>
+                    <th>Valor</th>
+                    <th>Validade</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </section>
+
+        <section class="rodape-tabela">
+
+            <p>Mostrando 1 - 5 de 320 produtos</p>
+
+            <div class="paginacao">
+                <button onclick="moverAtivoMenos()">&lt;</button>
+                <button id="btn1">1</button>
+                <button id="btn2">2</button>
+                <button id="btn3">3</button>
+                <span>...</span>
+                <button id="btn4">64</button>
+                <button onclick="moverAtivoMais()">&gt;</button>
+            </div>
+
+        </section>
+
+    </section>
+</div>
+<script th:src="@{/js/estoque.js}"></script>
+</body>
+</html>

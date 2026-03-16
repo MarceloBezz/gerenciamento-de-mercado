@@ -19,7 +19,7 @@ public class Configuracoes {
         return http
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.GET, "/home").authenticated();
-                    req.requestMatchers(HttpMethod.GET, "/funcionarios", "/cadastrar", "/balanco-financeiro", "/vendas").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.GET, "/funcionarios", "/funcionarios/cadastrar", "/balanco-financeiro", "/vendas").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.POST, "/funcionarios/cadastrar").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.GET, "/estoque").hasRole("ESTOQUISTA");
                     req.requestMatchers(HttpMethod.GET, "/caixa").hasRole("CAIXA");
@@ -40,7 +40,7 @@ public class Configuracoes {
                             .logoutUrl("/logout")
                             .logoutSuccessUrl("/login?logout");
                 })
-                // .csrf(AbstractHttpConfigurer::disable)
+//                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package br.com.fatec.erp.controller;
 
+import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.security.UsuarioSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -26,16 +27,21 @@ public class PageController {
     }
 
     @GetMapping("/funcionarios/cadastrar")
-    public String telaCadastrarFuncionario() {
+    public String telaCadastrarFuncionario(Model model) {
 //        model.addAttribute("usuario", usuario);
-//        if (!model.containsAttribute("usuarioDTO")) {
-//            model.addAttribute("usuarioDTO", new UsuarioDTO(null, null, null, null));
-//        }
+        if (!model.containsAttribute("usuarioDTO")) {
+            model.addAttribute("usuarioDTO", new UsuarioDTO(null, null, null, null));
+        }
         return "cadastro-funcionario";
     }
 
     @GetMapping("/produtos/cadastrar")
     public String telaCadastrarProduto() {
         return "cadastro-produto";
+    }
+
+    @GetMapping("/estoque")
+    public String estoque() {
+        return "estoque";
     }
 }
