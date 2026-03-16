@@ -16,14 +16,19 @@ public class GerenteService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    /*public Usuario alterarFuncionarios(Long id, UsuarioDTO novosDados){
+    public Usuario alterarFuncionarios(Long id, UsuarioDTO novosDados){
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
         if(optionalUsuario.isEmpty()){
-            throw new RuntimeException("O usuário inexistente");
+            throw new RuntimeException("Usuário inexistente");
         }
 
-        return
-    }*/
+        Usuario usuario = optionalUsuario.get();
+        usuario.setNome(novosDados.nome());
+        usuario.setEmail(novosDados.email());
+        usuario.setCargo(novosDados.cargo());
+
+        return usuarioRepository.save(usuario);
+    }
 
     public void removerFuncionario(Long id){
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
@@ -33,5 +38,4 @@ public class GerenteService {
 
         usuarioRepository.deleteById(id);
     }
-
 }

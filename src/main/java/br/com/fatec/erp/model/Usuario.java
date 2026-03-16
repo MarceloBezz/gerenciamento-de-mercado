@@ -53,6 +53,14 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
