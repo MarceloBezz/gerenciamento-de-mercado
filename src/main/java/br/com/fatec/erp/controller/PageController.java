@@ -41,7 +41,8 @@ public class PageController {
     }
 
     @GetMapping("/estoque")
-    public String estoque() {
+    public String estoque(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
+        model.addAttribute("usuario", usuario);
         return "estoque";
     }
 }

@@ -1,12 +1,15 @@
 package br.com.fatec.erp.controller;
 
 import br.com.fatec.erp.model.Estoque;
+import br.com.fatec.erp.model.dto.DashboardEstoqueResumo;
 import br.com.fatec.erp.model.dto.EstoqueProdutoValidade;
 import br.com.fatec.erp.model.dto.LoteDTO;
 import br.com.fatec.erp.service.EstoqueService;
 import br.com.fatec.erp.service.LoteService;
 import br.com.fatec.erp.service.ProdutoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,17 @@ public class ApiController {
         this.estoqueService = estoqueService;
     }
 
+    @GetMapping("/financeiro/dashboard")
+    public Page<EstoqueProdutoValidade> listarProdutos(Pageable pageable) {
+        var produtos = estoqueService.listarEstoqueComProdutos(pageable);
+        return produtos;
+    }
+
+    @GetMapping("/financeiro/dashboard/resumo")
+    public DashboardEstoqueResumo resumo() {
+        return estoqueService.buscarResumo();
+    }
+
     @GetMapping("/financeiro/entradas-saidas")
     public void listarEntradasESaidas(@RequestParam(required = false) String periodo) {
         // TODO Implementar método
@@ -36,12 +50,6 @@ public class ApiController {
     @GetMapping("/financeiro/vendas/produtos")
     public void listarProdutosVendidos(@RequestParam(required = false) String periodo) {
         // TODO Implementar método
-    }
-
-    @GetMapping("/financeiro/dashboard")
-    public List<EstoqueProdutoValidade> listarProdutos() {
-        var produtos = estoqueService.listarEstoqueComProdutos();
-        return produtos;
     }
 
     @PostMapping("/lote")
