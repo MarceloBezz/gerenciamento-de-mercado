@@ -27,6 +27,10 @@ public class Estoque {
         this.quantidadeMinima = quantidadeMinima;
     }
 
+    public Integer getQuantidadeMinima() {
+        return quantidadeMinima;
+    }
+
     public Produto getProduto() {
         return produto;
     }

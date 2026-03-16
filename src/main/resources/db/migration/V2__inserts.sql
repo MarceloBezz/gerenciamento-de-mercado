@@ -8,10 +8,10 @@ INSERT INTO produtos (nome, valor, descricao) VALUES
 ('Teclado', 150.00, 'Teclado gamer');
 
 -- Inserir estoque
-INSERT INTO estoque (produto_id, quantidade) VALUES
-(1, 10),
-(2, 50),
-(3, 30);
+INSERT INTO estoque (produto_id, quantidade, quantidade_minima) VALUES
+(1, 10, 5),
+(2, 50, 25),
+(3, 30, 10);
 
 -- Inserir lotes
 INSERT INTO lotes (produto_id, quantidade, validade) VALUES
