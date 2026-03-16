@@ -12,6 +12,7 @@ public class Estoque {
     @JoinColumn(name = "produto_id")
     private Produto produto;
     private Integer quantidade;
+    private Integer quantidadeMinima;
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
@@ -20,9 +21,10 @@ public class Estoque {
     public Estoque() {
     }
 
-    public Estoque(Produto produto, Integer quantidade) {
+    public Estoque(Produto produto, Integer quantidade, Integer quantidadeMinima) {
         this.produto = produto;
         this.quantidade = quantidade;
+        this.quantidadeMinima = quantidadeMinima;
     }
 
     public Produto getProduto() {

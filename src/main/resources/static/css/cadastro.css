@@ -119,8 +119,8 @@ select {
 .cancelar {
     padding: 10px;
     border: none;
-    background-color: #575252;
-    color: rgb(0, 0, 0);
+    background-color: rgb(250, 29, 29);
+    color: black;
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
@@ -133,7 +133,7 @@ select {
 }
 
 .cancelar:hover {
-    background-color: rgb(255, 0, 0);
+    background-color: rgb(195, 29, 29);
 }
 
 .apagar{

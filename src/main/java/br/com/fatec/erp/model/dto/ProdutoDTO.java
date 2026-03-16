@@ -11,6 +11,8 @@ public record ProdutoDTO(
         @Positive(message = "O valor do produto deve ser maior que zero!")
         Double valor,
         @NotBlank(message = "Preencha a descrição do produto!")
-        String descricao
+        String descricao,
+        @NotNull(message = "Preencha a quantidade mínima que o produto deve ter em estoque!")
+        Integer quantidadeMinimaEstoque
 ) {
 }

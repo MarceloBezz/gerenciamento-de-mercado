@@ -29,6 +29,7 @@ CREATE TABLE produtos (
 CREATE TABLE estoque (
 	produto_id INTEGER PRIMARY KEY,
 	quantidade INTEGER NOT NULL,
+	quantidade_minima INTEGER NOT NULL,
 
 	FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
