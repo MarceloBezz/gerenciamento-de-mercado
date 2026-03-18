@@ -6,6 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,7 +19,7 @@ public class Configuracoes {
         return http
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.GET, "/home").authenticated();
-                    req.requestMatchers(HttpMethod.GET, "/funcionarios", "/funcionarios/cadastrar", "/balanco-financeiro", "/vendas").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.GET, "/funcionarios", "/funcionarios/cadastrar", "/balanco-financeiro").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.POST, "/funcionarios/cadastrar").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.GET, "/estoque").hasRole("ESTOQUISTA");
                     req.requestMatchers(HttpMethod.GET, "/caixa").hasRole("CAIXA");
@@ -39,7 +40,7 @@ public class Configuracoes {
                             .logoutUrl("/logout")
                             .logoutSuccessUrl("/login?logout");
                 })
-//                 .csrf(AbstractHttpConfigurer::disable)
+                //  .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 

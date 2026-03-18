@@ -1,12 +1,12 @@
 package br.com.fatec.erp.controller;
 
-import br.com.fatec.erp.model.Estoque;
 import br.com.fatec.erp.model.dto.DashboardEstoqueResumo;
 import br.com.fatec.erp.model.dto.EstoqueProdutoValidade;
 import br.com.fatec.erp.model.dto.LoteDTO;
+import br.com.fatec.erp.model.dto.VendaProdutoDTO;
 import br.com.fatec.erp.service.EstoqueService;
 import br.com.fatec.erp.service.LoteService;
-import br.com.fatec.erp.service.ProdutoService;
+import br.com.fatec.erp.service.VendaService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +20,12 @@ import java.util.List;
 public class ApiController {
     private final LoteService loteService;
     private final EstoqueService estoqueService;
+    private final VendaService vendaService;
 
-    public ApiController(LoteService loteService, EstoqueService estoqueService) {
+    public ApiController(LoteService loteService, EstoqueService estoqueService, VendaService vendaService) {
         this.loteService = loteService;
         this.estoqueService = estoqueService;
+        this.vendaService = vendaService;
     }
 
     @GetMapping("/financeiro/dashboard")
@@ -58,6 +60,16 @@ public class ApiController {
         try {
             var lote = loteService.cadastrar(dto);
             return ResponseEntity.ok().body(lote);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/vendas")
+    public ResponseEntity<?> cadastrarVenda(@RequestBody List<VendaProdutoDTO> dtos) {
+        try {
+            var venda = vendaService.cadastrar(dtos);
+            return ResponseEntity.ok().body(venda);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
