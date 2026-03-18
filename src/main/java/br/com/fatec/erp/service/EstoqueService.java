@@ -18,8 +18,8 @@ public class EstoqueService {
         this.estoqueRepository = estoqueRepository;
     }
 
-    public Page<EstoqueProdutoValidade> listarEstoqueComProdutos(Pageable pageable) {
-        return estoqueRepository.buscarComProdutos(pageable);
+    public Page<EstoqueProdutoValidade> listarEstoqueComProdutos(Pageable pageable, String filtroProduto, String filtroStatus) {
+        return estoqueRepository.buscarComProdutos(pageable, filtroProduto, filtroStatus);
     }
 
     public DashboardEstoqueResumo buscarResumo() {

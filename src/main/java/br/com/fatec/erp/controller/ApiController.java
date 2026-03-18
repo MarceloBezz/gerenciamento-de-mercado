@@ -27,8 +27,9 @@ public class ApiController {
     }
 
     @GetMapping("/financeiro/dashboard")
-    public Page<EstoqueProdutoValidade> listarProdutos(Pageable pageable) {
-        var produtos = estoqueService.listarEstoqueComProdutos(pageable);
+    public Page<EstoqueProdutoValidade> listarProdutos(Pageable pageable, @RequestParam(required = false) String produto,
+                                                       @RequestParam(required = false) String status) {
+        var produtos = estoqueService.listarEstoqueComProdutos(pageable, produto, status);
         return produtos;
     }
 

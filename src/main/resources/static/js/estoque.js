@@ -1,20 +1,70 @@
 const btn1 = document.getElementById("btn1")
+const btn4 = document.getElementById("btn4")
 const linkSelected = document.getElementById("link-estoque")
+const filtroProduto = document.getElementById("filtro-produto")
+const btnLimparFiltro = document.querySelector(".btn-limpar-filtro")
+const selectStatus = document.querySelector(".filtro-status")
+
+// Paginação
 let page = 0, size = 8;
 
+// Para span de quantos e quais produtos estão sendo mostrados
 let mostrandoProdutos = {
     inicio: 1,
     fim: size,
     total: 0
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-    await carregarProdutos();
-    await carregaResumo();
+// Filtros
+let valorFiltro = "", valorStatus = ""
+
+// ======================= EVENTOS ITENS HTML ================================
+filtroProduto.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        valorFiltro = encodeURIComponent(filtroProduto.value)
+        carregarProdutos();
+        // if (btn1.classList.contains("pagina-ativa"))
+        //     carregarProdutos();
+        // else if (btn4.classList.contains("pagina-ativa")) {
+        //     selecionarBotao(btn1);
+        //     moverAtivoMenos();
+        // }
+    }
+})
+
+btnLimparFiltro.addEventListener("click", () => {
+    filtroProduto.textContent = "";
+    selectStatus.value = "todos";
+    valorFiltro = "";
+    valorStatus = "";
+    carregarProdutos();
+    // if (btn1.classList.contains("pagina-ativa"))
+    //     carregarProdutos();
+    // else if (btn4.classList.contains("pagina-ativa")) {
+    //     selecionarBotao(btn1);
+    //     moverAtivoMenos();
+    // }
+})
+
+selectStatus.addEventListener("change", () => {
+    valorStatus = selectStatus.value;
+    carregarProdutos();
+    // if (btn1.classList.contains("pagina-ativa"))
+    //     carregarProdutos();
+    // else if (btn4.classList.contains("pagina-ativa")) {
+    //     selecionarBotao(btn1);
+    //     moverAtivoMenos();
+    // }
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+    carregarProdutos();
+    carregaResumo();
     btn1.classList.add("pagina-ativa")
     linkSelected.classList.add("active")
 });
 
+// ======================= BUSCA DE DADOS NA API ================================
 async function carregaResumo() {
     const resposta = await fetch(`http://localhost:8080/api/financeiro/dashboard/resumo`);
     const resumo = await resposta.json();
@@ -22,16 +72,24 @@ async function carregaResumo() {
 }
 
 async function carregarProdutos() {
-    const resposta = await fetch(`http://localhost:8080/api/financeiro/dashboard?page=${page}&size=${size}`);
+    let url = `http://localhost:8080/api/financeiro/dashboard?page=${page}&size=${size}&produto=${valorFiltro}`
+    if (valorStatus !== "") url += `&status=${valorStatus}`
+    const resposta = await fetch(url);
     const produtos = await resposta.json();
     preencherTabela(produtos.content);
 }
 
+// ======================= PREENCHIMENTOS ========================================
 function preencherTabela(produtos) {
     const tbody = document.querySelector("#tabela-produtos tbody");
     tbody.innerHTML = "";
     produtos.forEach(item => {
         const status = calcularStatus(item);
+        const linhaStatus = `
+    <td class="status-container">
+        ${status.map(s => `<span class="status ${s.classe}">${s.texto}</span>`).join("")}
+    </td>
+`;
         const linha = `
             <tr>
                 <td>${item.estoque.produto.id}</td>
@@ -41,10 +99,11 @@ function preencherTabela(produtos) {
                 <td>${item.estoque.quantidadeMinima}</td>
                 <td>R$ ${item.estoque.produto.valor.toFixed(2)}</td>
                 <td>${formatarData(item.validade)}</td>
-                <td><span class="status ${status.classe}">${status.texto}</span></td>
+                ${linhaStatus}
                 <td class="acoes">✏️ 🗑️</td>
             </tr>
         `;
+        // <td><span class="status ${status[0].classe}">${status[0].texto}</span></td>
         tbody.insertAdjacentHTML("beforeend", linha);
     });
 }
@@ -62,15 +121,28 @@ function preencheDados(resumo) {
     else document.getElementById("btn4").textContent = Math.floor(mostrandoProdutos.total / size) + 1
 }
 
+function alterarTextoMostrandoProdutos(valor) {
+    mostrandoProdutos.inicio += (size * valor)
+    mostrandoProdutos.fim += (size * valor)
+    document.getElementById("texto-mostrando-produtos").textContent = `Mostrando ${mostrandoProdutos.inicio} - ${mostrandoProdutos.fim} de ${mostrandoProdutos.total} produtos`
+}
+
+// ======================= FUNÇÕES AUXILIARES ================================
 function calcularStatus(item) {
-    const hoje = new Date();
-    const validade = new Date(item.validade);
+    let status = [];
+    const hoje = new Date().setHours(0, 0, 0, 0);
+    const validade = new Date(item.validade).setHours(0, 0, 0, 0);
 
-    if (validade < hoje) return { texto: "Vencido", classe: "vencido" };
+    if (validade < hoje)
+        status.push({ texto: "Vencido", classe: "vencido" });
 
-    if (item.estoque.quantidade <= item.estoque.quantidadeMinima) return { texto: "Estoque Baixo", classe: "baixo" };
+    if (item.estoque.quantidade <= item.estoque.quantidadeMinima)
+        status.push({ texto: "Estoque Baixo", classe: "baixo" });
 
-    return { texto: "Normal", classe: "normal" };
+    if (status.length === 0)
+        status.push({ texto: "Normal", classe: "normal" })
+
+    return status;
 }
 
 function formatarData(dataISO) {
@@ -78,6 +150,7 @@ function formatarData(dataISO) {
     return data.toLocaleDateString("pt-BR");
 }
 
+// ======================= BOTÕES INFERIORES ================================
 function moverAtivoMais() {
     const botoes = document.querySelectorAll(".paginacao button");
 
@@ -94,7 +167,7 @@ function moverAtivoMais() {
                     botoes[i + 1].classList.add("pagina-ativa");
                     page = Number(botoes[i + 1].textContent) - 1;
                 }
-                carregarProdutos(page);
+                carregarProdutos();
                 alterarTextoMostrandoProdutos(1)
             }
             break;
@@ -111,25 +184,19 @@ function moverAtivoMenos() {
                 botoes[i].classList.remove("pagina-ativa");
                 botoes[i - 1].classList.add("pagina-ativa");
                 page = Number(botoes[i - 1].textContent) - 1;
-                carregarProdutos(page);
+                carregarProdutos();
                 alterarTextoMostrandoProdutos(-1)
             } else if (i === 1 && (Number(botoes[i].textContent) > 1)) {
                 for (let j = 1; j <= 3; j++) {
                     botoes[j].textContent = Number(botoes[j].textContent) - 1
                 }
                 page = Number(botoes[i].textContent) - 1;
-                carregarProdutos(page);
+                carregarProdutos();
                 alterarTextoMostrandoProdutos(-1)
             }
             break;
         }
     }
-}
-
-function alterarTextoMostrandoProdutos(valor) {
-    mostrandoProdutos.inicio += (size * valor)
-    mostrandoProdutos.fim += (size * valor)
-    document.getElementById("texto-mostrando-produtos").textContent = `Mostrando ${mostrandoProdutos.inicio} - ${mostrandoProdutos.fim} de ${mostrandoProdutos.total} produtos`
 }
 
 function selecionarBotao(botaoSelecionado) {
@@ -139,7 +206,7 @@ function selecionarBotao(botaoSelecionado) {
             botao.classList.remove("pagina-ativa")
             botaoSelecionado.classList.add("pagina-ativa")
             page = Number(botaoSelecionado.textContent) - 1;
-            carregarProdutos(page);
+            carregarProdutos();
 
             const diferenca = Number(botaoSelecionado.textContent) - Number(botao.textContent)
             alterarTextoMostrandoProdutos(diferenca)

@@ -79,15 +79,15 @@
 
             <section class="barra-acoes">
 
-                <input type="text" placeholder="Buscar produto..." class="input-busca">
-
+                <input type="text" placeholder="Buscar produto..." class="input-busca" id="filtro-produto">
                 <select class="filtro-status">
-                    <option>Todos</option>
-                    <option>Normal</option>
-                    <option>Estoque Baixo</option>
-                    <option>Vencido</option>
+                    <option value="">Todos</option>
+                    <option value="NORMAL">Normal</option>
+                    <option value="BAIXO">Estoque Baixo</option>
+                    <option value="VENCIDO">Vencido</option>
                 </select>
-
+                
+                <button class="btn-limpar-filtro"><i class="bi bi-eraser-fill"></i> Limpar filtros</button>
                 <button class="btn-novo-produto">+ Novo Produto</button>
 
             </section>

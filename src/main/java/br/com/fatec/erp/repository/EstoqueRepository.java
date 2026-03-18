@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,14 +26,21 @@ public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
             FROM Estoque e
             JOIN e.produto p
             LEFT JOIN Lote l ON l.produto = p
+            WHERE (:nome IS NULL OR LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%')))
             GROUP BY e
+            HAVING (
+                :status IS NULL
+                OR (:status = 'BAIXO' AND e.quantidade < e.quantidadeMinima)
+                OR (:status = 'VENCIDO' AND MIN(l.validade) < CURRENT_DATE)
+                OR (:status = 'NORMAL' AND e.quantidade >= e.quantidadeMinima AND MIN(l.validade) > CURRENT_DATE)
+            )
             """)
-    Page<EstoqueProdutoValidade> buscarComProdutos(Pageable pageable);
+    Page<EstoqueProdutoValidade> buscarComProdutos(Pageable pageable, @Param("nome") String nome, @Param("status") String status);
 
     @Query(value = """
             SELECT
                 COUNT(e.produto_id) AS total_produtos,
-                SUM(CASE WHEN e.quantidade <= e.quantidade_minima THEN 1 ELSE 0 END) AS estoque_baixo,
+                SUM(CASE WHEN e.quantidade < e.quantidade_minima THEN 1 ELSE 0 END) AS estoque_baixo,
                 SUM(CASE WHEN l.min_validade < CURRENT_DATE THEN 1 ELSE 0 END) AS vencidos,
                 SUM(e.quantidade * p.valor) AS valor_total
             FROM estoque e

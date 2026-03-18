@@ -1,8 +1,5 @@
 package br.com.fatec.erp.model;
 
-import java.time.LocalDate;
-
-
 import jakarta.persistence.*;
 
 @Entity

@@ -101,6 +101,21 @@
     opacity: 0.9;
 }
 
+.btn-limpar-filtro {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #c71010, #ff3939);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-limpar-filtro:hover {
+    opacity: 0.9;
+}
+
 /* ===== TABELA ===== */
 .tabela-produtos {
     background: white;
@@ -133,11 +148,24 @@
 }
 
 /* ===== BADGES STATUS ===== */
+.status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* impede spans de esticar na largura */
+    gap: 4px;
+}
+
 .status {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 3px 8px;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1;
 }
 
 .status.normal {
