@@ -232,3 +232,154 @@
 .card-icon{
     font-size:20px;
 }
+
+/* Overlay */
+.modal-lote {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.4);
+
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Caixa */
+.modal-content {
+    background: #fff;
+    width: 420px;
+    border-radius: 12px;
+    padding: 20px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-fechar {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Form */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Ações */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-cancelar {
+    background: #e5e7eb;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-salvar {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* base para botões de ação */
+.acoes button,
+.acoes a {
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+/* botão adicionar lote (já tinha) */
+.btn-add-lote {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-add-lote:hover {
+    background: #1d4ed8;
+}
+
+/* botão editar */
+/* .btn-editar {
+    background: #f59e0b;
+    color: white;
+}
+
+.btn-editar:hover {
+    background: #d97706;
+} */
+
+/* ícones */
+.acoes i {
+    font-size: 14px;
+}
+
+.link-produto {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-produto:hover {
+    text-decoration: underline;
+    color: #1d4ed8;
+}
