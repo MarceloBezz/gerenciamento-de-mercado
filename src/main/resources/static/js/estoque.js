@@ -245,19 +245,31 @@ document.getElementById("form-lote").addEventListener("submit", async function (
     e.preventDefault();
 
     const payload = {
-        produtoId: document.getElementById("produtoId").value,
+        produtoID: document.getElementById("produtoId").value,
         quantidade: document.getElementById("quantidadeLote").value,
         validade: document.getElementById("validadeLote").value
     };
+    const token = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
 
-    await fetch("/lotes/cadastrar", {
+
+    const resposta = await fetch("/api/lote", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            [header]: token
         },
         body: JSON.stringify(payload)
     });
+    if (!resposta.ok) {
+        const erro = await resposta.text();
+        alert("Erro ao cadastrar Lote!")
+        console.error(erro)
+        return;
+    }
 
+    alert("Lote cadastrado com sucesso!");
     fecharModalLote();
     carregarProdutos();
+    carregaResumo();
 });
