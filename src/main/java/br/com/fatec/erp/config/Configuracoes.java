@@ -6,12 +6,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@SuppressWarnings("unused")
 public class Configuracoes {
 
     @Bean
@@ -40,7 +40,7 @@ public class Configuracoes {
                             .logoutUrl("/logout")
                             .logoutSuccessUrl("/login?logout");
                 })
-                //  .csrf(AbstractHttpConfigurer::disable)
+                // .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 
@@ -51,8 +51,9 @@ public class Configuracoes {
 
     @Bean
     RoleHierarchy roleHierarchy() {
-        String hierarquia = "ROLE_ADMIN > ROLE_ESTOQUISTA\n" +
-                "ROLE_ADMIN > ROLE_CAIXA";
+        String hierarquia = """
+                            ROLE_ADMIN > ROLE_ESTOQUISTA
+                            ROLE_ADMIN > ROLE_CAIXA""";
         return RoleHierarchyImpl.fromHierarchy(hierarquia);
     }
 }

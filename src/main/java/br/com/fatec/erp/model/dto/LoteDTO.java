@@ -1,11 +1,10 @@
 package br.com.fatec.erp.model.dto;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-
-import java.time.LocalDate;
 
 public record LoteDTO(
         @NotNull(message = "Preencha o ID do produto!")
