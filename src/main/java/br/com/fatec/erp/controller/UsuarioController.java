@@ -21,7 +21,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping("/funcionarios/cadastrar")
+    @PostMapping("/cadastrar")
     public String cadastrarFuncionario(@Valid UsuarioDTO usuarioDTO, BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
             return "cadastro-funcionario";

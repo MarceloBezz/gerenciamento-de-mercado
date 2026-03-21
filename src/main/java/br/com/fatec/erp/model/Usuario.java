@@ -60,8 +60,4 @@ public class Usuario {
     public void setEmail(String email){
         this.email = email;
     }
-
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
 }

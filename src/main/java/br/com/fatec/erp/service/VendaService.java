@@ -1,5 +1,10 @@
 package br.com.fatec.erp.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import br.com.fatec.erp.model.Produto;
 import br.com.fatec.erp.model.Usuario;
 import br.com.fatec.erp.model.dto.DadosVenda;
@@ -8,26 +13,17 @@ import br.com.fatec.erp.model.venda.Venda;
 import br.com.fatec.erp.model.venda.VendaProduto;
 import br.com.fatec.erp.repository.ProdutoRepository;
 import br.com.fatec.erp.repository.UsuarioRepository;
-import br.com.fatec.erp.repository.VendaProdutoRepository;
 import br.com.fatec.erp.repository.VendaRepository;
-import br.com.fatec.erp.security.UsuarioSecurity;
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class VendaService {
     private final VendaRepository vendaRepository;
-    private final VendaProdutoRepository vendaProdutoRepository;
     private final ProdutoRepository produtoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public VendaService(VendaRepository vendaRepository, VendaProdutoRepository vendaProdutoRepository, ProdutoRepository produtoRepository, UsuarioRepository usuarioRepository) {
+    public VendaService(VendaRepository vendaRepository, ProdutoRepository produtoRepository, UsuarioRepository usuarioRepository) {
         this.vendaRepository = vendaRepository;
-        this.vendaProdutoRepository = vendaProdutoRepository;
         this.produtoRepository = produtoRepository;
         this.usuarioRepository = usuarioRepository;
     }
