@@ -5,34 +5,41 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import br.com.fatec.erp.model.Usuario;
+import br.com.fatec.erp.model.dto.DadosUsuario;
 import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class GerenteService {
     private final UsuarioRepository usuarioRepository;
 
-    public GerenteService(UsuarioRepository usuarioRepository){
+    public GerenteService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario alterarFuncionarios(Long id, UsuarioDTO novosDados){
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-        if(optionalUsuario.isEmpty()){
-            throw new RuntimeException("Usuário inexistente");
+    @Transactional
+    public DadosUsuario alterarFuncionarios(Long id, UsuarioDTO novosDados) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow();
+
+        if (novosDados.nome() != null && !novosDados.nome().equals("")) {
+            usuario.setNome(novosDados.nome());
         }
 
-        Usuario usuario = optionalUsuario.get();
-        usuario.setNome(novosDados.nome());
-        usuario.setEmail(novosDados.email());
-        usuario.setCargo(novosDados.cargo());
+        if(novosDados.email() != null && !novosDados.email().equals("")){
+            usuario.setEmail(novosDados.email());
+        }
 
-        return usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
+
+        return new DadosUsuario(usuario.getNome(), usuario.getEmail());
+
+        
     }
 
-    public void removerFuncionario(Long id){
+    public void removerFuncionario(Long id) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-        if(optionalUsuario.isEmpty()){
+        if (optionalUsuario.isEmpty()) {
             throw new RuntimeException("Usuário inexistente");
         }
 
