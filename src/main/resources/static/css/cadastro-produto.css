@@ -1,0 +1,99 @@
+.main {
+    padding: 40px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+/* ===== TÍTULO ===== */
+.titulo-pagina {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.geral {
+    background-color: white;
+    
+    width: 1200px;
+    height: 600px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.titulo{
+    margin-bottom: 35px;
+}
+.sub-titulo{
+    margin-bottom: 35px;
+}
+.bloco-nome .form-control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    border-radius: 7px;
+    width: 100%;
+    height: 30px;
+    align-items: center;
+}
+.bloco-descricao .form-control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    border-radius: 7px;
+    width: 100%;
+    height: 80px;
+    padding: 3px;
+    text-align: left;
+
+}
+.bloco-estoque .form-control{
+    border-radius: 7px;
+    height: 30px;
+}
+.bloco-preco .form-control{
+    border-radius: 7px;
+    height: 30px;
+}
+
+.linha {
+    display: flex;
+    gap: 20px; /* espaço entre os campos */
+    
+}
+
+.linha > div {
+    flex: 1; /* cada um ocupa metade */
+    display: flex;
+    flex-direction: column;
+    
+}
+.bloco-botoes{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 60px;
+}
+.btn-cancelar{
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #c71010, #ff3939);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 120px; /* mesmo tamanho */
+
+}
+.btn-salvar{
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 120px;
+}
+

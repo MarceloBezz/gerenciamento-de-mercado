@@ -1,7 +1,10 @@
 package br.com.fatec.erp.controller;
 
+import br.com.fatec.erp.model.dto.LoteDTO;
+import br.com.fatec.erp.model.dto.ProdutoDTO;
 import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.security.UsuarioSecurity;
+import br.com.fatec.erp.service.ProdutoService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
+    private final ProdutoService produtoService;
+
+    PageController(ProdutoService produtoService) {
+        this.produtoService = produtoService;
+    }
+
     @GetMapping({"/login", "/"})
     public String login(@RequestParam(required = false) String logout,
                         @RequestParam(required = false) String error, Model model) {
@@ -35,14 +44,19 @@ public class PageController {
         return "cadastro-funcionario";
     }
 
-    @GetMapping("/produtos/cadastrar")
-    public String telaCadastrarProduto() {
-        return "cadastro-produto";
+   @GetMapping("/produtos/cadastrar")
+    public String telaCadastrarProduto(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
+
+    model.addAttribute("produto", new ProdutoDTO(null, null, null, null));
+    model.addAttribute("usuario", usuario);
+
+    return "cadastro-produto";
     }
 
     @GetMapping("/estoque")
     public String estoque(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
         model.addAttribute("usuario", usuario);
+        model.addAttribute("produtos", produtoService.listarProdutos());
         return "estoque";
     }
 }

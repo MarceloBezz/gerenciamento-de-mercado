@@ -14,6 +14,8 @@
         <ul>
             <div sec:authorize="hasRole('ESTOQUISTA')">
                 <a th:href="@{/estoque}"><li id="link-estoque">Estoque</li></a>
+                <a th:href="@{/produtos/cadastrar}"><li id="link-cadastro-produto">Cadastro de Produto</li></a>
+
             </div>
             <div sec:authorize="hasRole('CAIXA')">
                 <a th:href="@{/caixa}"><li id="link-caixa">Caixa</li></a>
@@ -21,7 +23,7 @@
             <div sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{/funcionarios}"><li id="link-funcionarios">Gerenciar funcionários</li></a>
                 <a th:href="@{/balanco-fianceiro}"><li id="link-balanco-financeiro">Balanço financeiro</li></a>
-                <a th:href="@{/vendas}"><li id="link-vendas">Vendas</li></a>
+                <a th:href="@{/vendas}"><li id="link-vendas">Vendas</li></a> 
             </div>
         </ul>
     </nav>

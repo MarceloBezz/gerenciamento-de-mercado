@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/cadastro-produto.css}">
+
+    <title>Cadastrar Produto</title>
+</head>
+
+<body>
+    <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
+    <div class="main">
+
+    <header class="topbar">
+        <h1 th:text="|Olá, ${usuario.usuario.nome}|"></h1>
+        <div class="user-menu">
+
+            <button class="user-trigger" onclick="toggleUserMenu()">
+                    <span th:text="${usuario.usuario.nome}"></span>
+                    <img src="https://i.pravatar.cc/40" alt="avatar">
+                </button>
+
+                <div class="dropdown-menu" id="userDropdown">
+
+                    <a th:href="@{/meus-dados}">
+                        Meus dados
+                    </a>
+
+                    
+
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="logout-btn">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        
+        <section class="geral">
+            <h1 class="titulo">Cadastrar Produto</h1>
+            <section class="conteudos">
+
+                <div class="conteudo">
+                    <h2 class="sub-titulo">Novo Produto</h2>
+
+                   <div th:if="${sucesso}" style="color: green; font-weight: bold; margin-bottom: 15px;">
+                        <p th:text="${sucesso}"></p>
+                    </div>
+                    <form th:action="@{/produtos/cadastrar}" method="post" th:object="${produto}">
+                        
+                        <div class="bloco-nome">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" th:field="*{nome}" placeholder="Digite o nome do produto: ">
+                        </div>
+
+                        <div class="bloco-descricao">
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <textarea class="form-control" th:field="*{descricao}" placeholder="Digite a descrição para o produto: "></textarea>
+                        </div>
+
+                        <div class="linha">
+                            <div class="bloco-estoque">
+                                <label for="estoque" class="form-label">Estoque Mínimo</label>
+                                <input type="number" class="form-control" th:field="*{quantidadeMinimaEstoque}" placeholder="Digite a quantidade mínima que o produto deve ter em estoque: ">
+                            </div>
+
+                        
+                            <div class="bloco-preco">
+                                <label class="form-label">Preço</label>
+                                <input type="text" class="form-control" th:field="*{valor}" placeholder="R$: ">
+                            </div>
+                        </div>
+
+                        <div class="bloco-botoes">
+                            <button type="reset" class="btn-cancelar">Cancelar</button>
+                            <button type="submit" class="btn-salvar">Salvar</button>
+                        </div>
+                        </form> 
+
+                        
+                       
+
+                        
+                        
+                    
+                </div>
+            </section>
+        </section>
+    
+</body>
+</html>
