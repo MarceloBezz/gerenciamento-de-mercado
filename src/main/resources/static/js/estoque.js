@@ -93,7 +93,7 @@ function preencherTabela(produtos) {
         const linha = `
             <tr>
                 <td>${item.estoque.produto.id}</td>
-                <td><a href="/produtos/${item.estoque.produto.id}" title="Editar produto" class="link-produto">${item.estoque.produto.nome}</a></td>
+                <td><a href="/produtos/cadastrar?id=${item.estoque.produto.id}" title="Editar produto" class="link-produto">${item.estoque.produto.nome}</a></td>
                 <td>${item.estoque.quantidade}</td>
                 <td>${item.estoque.produto.descricao}</td>
                 <td>${item.estoque.quantidadeMinima}</td>

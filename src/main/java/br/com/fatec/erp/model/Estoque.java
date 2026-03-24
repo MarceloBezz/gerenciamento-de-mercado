@@ -38,4 +38,8 @@ public class Estoque {
     public Integer getQuantidade() {
         return quantidade;
     }
+
+    public void setQuantidadeMinima(Integer quantidadeMinima) {
+        this.quantidadeMinima = quantidadeMinima;
+    }
 }

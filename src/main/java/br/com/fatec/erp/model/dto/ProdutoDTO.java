@@ -13,6 +13,7 @@ public record ProdutoDTO(
         @NotBlank(message = "Preencha a descrição do produto!")
         String descricao,
         @NotNull(message = "Preencha a quantidade mínima que o produto deve ter em estoque!")
-        Integer quantidadeMinimaEstoque
+        Integer quantidadeMinimaEstoque,
+        Long id
 ) {
 }

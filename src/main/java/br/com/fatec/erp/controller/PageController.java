@@ -1,8 +1,10 @@
 package br.com.fatec.erp.controller;
 
+import br.com.fatec.erp.exception.ProdutoNaoEncontradoException;
 import br.com.fatec.erp.model.dto.ProdutoDTO;
 import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.security.UsuarioSecurity;
+import br.com.fatec.erp.service.ProdutoService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
+    private final ProdutoService produtoService;
+
+    public PageController(ProdutoService produtoService) {
+        this.produtoService = produtoService;
+    }
 
     @GetMapping({"/login", "/"})
     public String login(@RequestParam(required = false) String logout,
@@ -43,9 +50,14 @@ public class PageController {
     }
 
     @GetMapping("/produtos/cadastrar")
-    public String telaCadastrarProduto(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
-
-        model.addAttribute("produto", new ProdutoDTO(null, null, null, null));
+    public String telaCadastrarProduto(@AuthenticationPrincipal UsuarioSecurity usuario, Model model,
+                                       @RequestParam(required = false) Long id) throws ProdutoNaoEncontradoException {
+        if (id != null) {
+            ProdutoDTO produto = produtoService.buscarPorId(id);
+            model.addAttribute("produto",produto);
+        } else {
+            model.addAttribute("produto", new ProdutoDTO(null, null, null, null, null));
+        } 
         model.addAttribute("usuario", usuario);
 
         return "cadastro-produto";
