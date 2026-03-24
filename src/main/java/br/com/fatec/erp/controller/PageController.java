@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.fatec.erp.model.dto.UsuarioDTO;
+import br.com.fatec.erp.security.UsuarioSecurity;
+
 @Controller
 public class PageController {
     private final ProdutoService produtoService;

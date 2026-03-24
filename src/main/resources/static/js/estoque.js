@@ -93,17 +93,24 @@ function preencherTabela(produtos) {
         const linha = `
             <tr>
                 <td>${item.estoque.produto.id}</td>
-                <td>${item.estoque.produto.nome}</td>
+                <td><a href="/produtos/${item.estoque.produto.id}" title="Editar produto" class="link-produto">${item.estoque.produto.nome}</a></td>
                 <td>${item.estoque.quantidade}</td>
                 <td>${item.estoque.produto.descricao}</td>
                 <td>${item.estoque.quantidadeMinima}</td>
                 <td>R$ ${item.estoque.produto.valor.toFixed(2)}</td>
                 <td>${formatarData(item.validade)}</td>
                 ${linhaStatus}
-                <td class="acoes">✏️ 🗑️</td>
+                <td class="acoes">
+                    <button class="btn-add-lote" title="Adicionar Lote" onclick="abrirModalLote(${item.estoque.produto.id}, '${item.estoque.produto.nome}')">
+                        <i class="bi bi-box-seam"></i>
+                    </button>
+                </td>
             </tr>
         `;
-        // <td><span class="status ${status[0].classe}">${status[0].texto}</span></td>
+        // <a href="/produtos/${item.estoque.produto.id}" class="btn-editar" title="Editar produto">
+        //                 ✏️
+        //             </a>
+        // <i class="bi bi-pencil"></i>
         tbody.insertAdjacentHTML("beforeend", linha);
     });
 }
@@ -213,3 +220,56 @@ function selecionarBotao(botaoSelecionado) {
         }
     })
 }
+
+// ======================= OVERLAY ================================
+function abrirModalLote(produtoId, produtoNome) {
+    document.getElementById("modal-lote").style.display = "flex";
+
+    document.getElementById("produtoId").value = produtoId;
+    document.getElementById("produtoNome").value = produtoNome;
+}
+
+function fecharModalLote() {
+    document.getElementById("modal-lote").style.display = "none";
+}
+
+// fechar clicando fora
+window.onclick = function (event) {
+    const modal = document.getElementById("modal-lote");
+    if (event.target === modal) {
+        fecharModalLote();
+    }
+};
+
+document.getElementById("form-lote").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const payload = {
+        produtoID: document.getElementById("produtoId").value,
+        quantidade: document.getElementById("quantidadeLote").value,
+        validade: document.getElementById("validadeLote").value
+    };
+    const token = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
+
+    const resposta = await fetch("/api/lote", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            [header]: token
+        },
+        body: JSON.stringify(payload)
+    });
+    if (!resposta.ok) {
+        const erro = await resposta.text();
+        alert("Erro ao cadastrar Lote!")
+        console.error(erro)
+        return;
+    }
+
+    alert("Lote cadastrado com sucesso!");
+    fecharModalLote();
+    carregarProdutos();
+    carregaResumo();
+});

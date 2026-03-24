@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.fatec.erp.model.Usuario;
 import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.repository.UsuarioRepository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Service // @Service indica que esta classe pertence à camada de regras de negócio.
 // O Spring cria e gerencia automaticamente um objeto dessa classe (Bean)
