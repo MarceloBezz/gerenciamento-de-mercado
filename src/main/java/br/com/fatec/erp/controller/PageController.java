@@ -3,22 +3,15 @@ package br.com.fatec.erp.controller;
 import br.com.fatec.erp.model.dto.ProdutoDTO;
 import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.security.UsuarioSecurity;
-import br.com.fatec.erp.service.ProdutoService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
-    private final ProdutoService produtoService;
-
-    PageController(ProdutoService produtoService) {
-        this.produtoService = produtoService;
-    }
 
     @GetMapping({"/login", "/"})
     public String login(@RequestParam(required = false) String logout,
@@ -61,7 +54,6 @@ public class PageController {
     @GetMapping("/estoque")
     public String estoque(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
         model.addAttribute("usuario", usuario);
-//        model.addAttribute("produtos", produtoService.listarProdutos());
         return "estoque";
     }
 }

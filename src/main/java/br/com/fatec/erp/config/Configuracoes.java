@@ -22,6 +22,7 @@ public class Configuracoes {
                     req.requestMatchers(HttpMethod.GET, "/funcionarios", "/funcionarios/cadastrar", "/balanco-financeiro").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.POST, "/funcionarios/cadastrar").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.GET, "/estoque", "/produtos/**").hasRole("ESTOQUISTA");
+                    req.requestMatchers(HttpMethod.POST, "/produtos/**").hasRole("ESTOQUISTA");
                     req.requestMatchers(HttpMethod.GET, "/caixa").hasRole("CAIXA");
                     req.anyRequest().permitAll(); // Permissão temporária de todas as rotas para não atrapalhar testes
                 })
