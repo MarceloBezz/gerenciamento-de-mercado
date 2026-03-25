@@ -62,12 +62,13 @@ public class UsuarioService {
     @Transactional
     public Usuario atualizar(UsuarioAtualizarDTO usuarioAtualizarDTO) throws Exception {
     Usuario usuario = usuarioRepository.findById(usuarioAtualizarDTO.id()).get();
-        if (usuarioRepository.existsByEmailIgnoringCase(usuario.getEmail()) && !usuario.getEmail().equalsIgnoreCase(usuarioAtualizarDTO.email())) {
+        if (usuarioRepository.existsByEmailIgnoringCase(usuario.getEmail()) && !usuario.getEmail().equalsIgnoreCase(usuarioAtualizarDTO.email()) && usuarioAtualizarDTO.email() != null) {
             throw new Exception("Email já está cadastrado!");
         }
-        usuario.setEmail(usuarioAtualizarDTO.email());
-
-        usuario.setSenha(passwordEncoder.encode(usuarioAtualizarDTO.senha()));
+        if (usuarioAtualizarDTO.email() != null)
+            usuario.setEmail(usuarioAtualizarDTO.email());
+        if (usuarioAtualizarDTO.senha() != null)
+            usuario.setSenha(passwordEncoder.encode(usuarioAtualizarDTO.senha()));
         return usuario;
     }
 }

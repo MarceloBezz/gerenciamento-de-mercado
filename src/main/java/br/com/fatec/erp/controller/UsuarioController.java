@@ -2,9 +2,7 @@ package br.com.fatec.erp.controller;
 
 import br.com.fatec.erp.model.Usuario;
 import br.com.fatec.erp.model.dto.UsuarioAtualizarDTO;
-import br.com.fatec.erp.security.UsuarioSecurity;
 import jakarta.validation.Valid;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,8 +39,6 @@ public class UsuarioController {
         }
     }
 
-    
-
     @GetMapping("/{id}")
     public String buscarPorId(@PathVariable Long id) throws Exception {
             usuarioService.buscarPorId(id);
@@ -66,11 +62,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/atualizar")
-    public String atualizaUsuario(@RequestBody UsuarioAtualizarDTO usuarioAtualizarDTO, Model model) throws Exception {
-
-        Usuario usuario = usuarioService.atualizar(usuarioAtualizarDTO);
-
-         return "meus-dados";
+    public String atualizaUsuario(UsuarioAtualizarDTO usuarioAtualizarDTO, Model model, RedirectAttributes redirectAttributes) throws Exception {
+        usuarioService.atualizar(usuarioAtualizarDTO);
+        redirectAttributes.addFlashAttribute("sucesso", "Usuário atualizado com sucesso!");
+        return "redirect:/meus-dados";
     }
 
 }

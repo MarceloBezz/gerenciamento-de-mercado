@@ -1,6 +1,7 @@
 package br.com.fatec.erp.controller;
 
 import br.com.fatec.erp.exception.ProdutoNaoEncontradoException;
+import br.com.fatec.erp.model.Usuario;
 import br.com.fatec.erp.model.dto.ProdutoDTO;
 import br.com.fatec.erp.model.dto.UsuarioDTO;
 import br.com.fatec.erp.security.UsuarioSecurity;
@@ -36,13 +37,13 @@ public class PageController {
 
     @GetMapping("/home")
     public String home(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
-        model.addAttribute("usuario", usuario);
+        model.addAttribute("usuario", usuario.getUsuario());
         return "home";
     }
 
     @GetMapping("/funcionarios/cadastrar")
-    public String telaCadastrarFuncionario(Model model) {
-//        model.addAttribute("usuario", usuario);
+    public String telaCadastrarFuncionario(Model model, @AuthenticationPrincipal UsuarioSecurity usuarioSecurity) {
+       model.addAttribute("usuario", usuarioSecurity.getUsuario());
         if (!model.containsAttribute("usuarioDTO")) {
             model.addAttribute("usuarioDTO", new UsuarioDTO(null, null, null, null));
         }
@@ -58,14 +59,24 @@ public class PageController {
         } else {
             model.addAttribute("produto", new ProdutoDTO(null, null, null, null, null));
         } 
-        model.addAttribute("usuario", usuario);
+        model.addAttribute("usuario", usuario.getUsuario());
 
         return "cadastro-produto";
     }
 
     @GetMapping("/estoque")
     public String estoque(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
-        model.addAttribute("usuario", usuario);
+        model.addAttribute("usuario", usuario.getUsuario());
         return "estoque";
     }
+
+    @GetMapping("/meus-dados")
+    public String meusDados(@AuthenticationPrincipal UsuarioSecurity usuarioSecurity, Model model) {
+        Usuario usuario = usuarioSecurity.getUsuario();
+        UsuarioDTO dto = new UsuarioDTO(usuario.getNome(), usuario.getEmail(), null, usuario.getCargo());
+        model.addAttribute("usuario", usuarioSecurity.getUsuario());
+        model.addAttribute("usuarioDTO", dto);
+        return "meus-dados";
+    }
+    
 }
