@@ -7,8 +7,8 @@
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>Estoque</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/estoque.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 
@@ -16,30 +16,7 @@
     <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
     <div class="main">
 
-        <header class="topbar">
-            <h1 th:text="|Olá, ${usuario.usuario.nome}|"></h1>
-
-            <div class="user-menu">
-
-                <button class="user-trigger" onclick="toggleUserMenu()">
-                    <span th:text="${usuario.usuario.nome}"></span>
-                    <img src="https://i.pravatar.cc/40" alt="avatar">
-                </button>
-
-                <div class="dropdown-menu" id="userDropdown">
-
-                    <a th:href="@{/meus-dados}">
-                        Meus dados
-                    </a>
-
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="logout-btn">
-                            Logout
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{fragments/fragments :: cabecalho}"></div>
 
         <section class="conteudo">
 
@@ -136,8 +113,8 @@
             </section>
 
         </section>
-    </div>
-    <div id="modal-lote" class="modal-lote">
+        </div>
+        <div id="modal-lote" class="modal-lote">
 
         <div class="modal-content">
 
@@ -172,9 +149,11 @@
 
             </form>
         </div>
+        </div>
     </div>
-    <script th:src="@{/js/home.js}"></script>
-    <script th:src="@{/js/estoque.js}"></script>
+</body>
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/estoque.js}"></script>
 </body>
 
 </html>

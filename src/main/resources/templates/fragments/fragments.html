@@ -1,32 +1,70 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<aside th:fragment="barra-lateral" class="sidebar">
-    <h2 class="logo">Sistema de ERP</h2>
 
-    <nav>
-        <ul>
-            <div sec:authorize="hasRole('ESTOQUISTA')">
-                <a th:href="@{/estoque}"><li id="link-estoque">Estoque</li></a>
-                <a th:href="@{/produtos/cadastrar}"><li id="link-cadastro-produto">Cadastro de Produto</li></a>
+    <header class="topbar" th:fragment="cabecalho">
+        <h1 th:text="|Olá, ${usuario.nome}|"></h1>
 
+        <div class="user-menu">
+
+            <button class="user-trigger" onclick="toggleUserMenu()">
+                <span th:text="${usuario.nome}"></span>
+                <img src="https://i.pravatar.cc/40" alt="avatar">
+            </button>
+
+            <div class="dropdown-menu" id="userDropdown">
+
+                <a th:href="@{/meus-dados}">
+                    Meus dados
+                </a>
+
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">
+                        Logout
+                    </button>
+                </form>
             </div>
-            <div sec:authorize="hasRole('CAIXA')">
-                <a th:href="@{/caixa}"><li id="link-caixa">Caixa</li></a>
-            </div>
-            <div sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/funcionarios}"><li id="link-funcionarios">Gerenciar funcionários</li></a>
-                <a th:href="@{/balanco-fianceiro}"><li id="link-balanco-financeiro">Balanço financeiro</li></a>
-                <a th:href="@{/vendas}"><li id="link-vendas">Vendas</li></a> 
-            </div>
-        </ul>
-    </nav>
-</aside>
+        </div>
+    </header>
+
+    <aside th:fragment="barra-lateral" class="sidebar">
+        <h2 class="logo">Sistema de ERP</h2>
+
+        <nav>
+            <ul>
+                <div sec:authorize="hasRole('ESTOQUISTA')">
+                    <a th:href="@{/estoque}">
+                        <li id="link-estoque">Estoque</li>
+                    </a>
+                    <a th:href="@{/produtos/cadastrar}">
+                        <li id="link-cadastro-produto">Cadastro de Produto</li>
+                    </a>
+
+                </div>
+                <div sec:authorize="hasRole('CAIXA')">
+                    <a th:href="@{/caixa}">
+                        <li id="link-caixa">Caixa</li>
+                    </a>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/funcionarios}">
+                        <li id="link-funcionarios">Gerenciar funcionários</li>
+                    </a>
+                    <a th:href="@{/balanco-fianceiro}">
+                        <li id="link-balanco-financeiro">Balanço financeiro</li>
+                    </a>
+                    <a th:href="@{/vendas}">
+                        <li id="link-vendas">Vendas</li>
+                    </a>
+                </div>
+            </ul>
+        </nav>
+    </aside>
 </body>
+
 </html>

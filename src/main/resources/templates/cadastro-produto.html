@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
     <link rel="stylesheet" th:href="@{/css/cadastro-produto.css}">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
@@ -15,30 +15,7 @@
     <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
     <div class="main">
 
-        <header class="topbar">
-            <h1 th:text="|Olá, ${usuario.usuario.nome}|"></h1>
-            <div class="user-menu">
-
-                <button class="user-trigger" onclick="toggleUserMenu()">
-                    <span th:text="${usuario.usuario.nome}"></span>
-                    <img src="https://i.pravatar.cc/40" alt="avatar">
-                </button>
-
-                <div class="dropdown-menu" id="userDropdown">
-
-                    <a th:href="@{/meus-dados}">
-                        Meus dados
-                    </a>
-
-
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="logout-btn">
-                            Logout
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </header>
+    <div th:replace="~{fragments/fragments :: cabecalho}"></div>
 
         <section class="geral">
             <h1 class="titulo">Cadastrar Produto</h1>

@@ -1,108 +1,85 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema de ERP</title>
-<link rel="stylesheet" th:href="@{/css/home.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
 </head>
 
 <body>
 
-<div th:replace="~{fragments/fragments :: barra-lateral}"></div>
+    <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
 
-<!-- Conteúdo principal -->
-<div class="main">
+    <!-- Conteúdo principal -->
+    <div class="main">
 
-    <!-- Topbar -->
-    <header class="topbar">
-        <h1 th:text="|Olá, ${usuario.usuario.nome}|"></h1>
+        <div th:replace="~{fragments/fragments :: cabecalho}"></div>
 
-        <div class="user-menu">
+        <!-- Cards -->
+        <section class="cards">
 
-            <button class="user-trigger" onclick="toggleUserMenu()">
-                <span th:text="${usuario.usuario.nome}"></span>
-                <img src="https://i.pravatar.cc/40" alt="avatar">
-            </button>
-
-            <div class="dropdown-menu" id="userDropdown">
-
-                <a th:href="@{/meus-dados}">
-                    Meus dados
-                </a>
-
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="logout-btn">
-                        Logout
-                    </button>
-                </form>
+            <div class="card">
+                <h3>Título</h3>
+                <p>Valor</p>
             </div>
-        </div>
-    </header>
 
-    <!-- Cards -->
-    <section class="cards">
+            <div class="card">
+                <h3>Título</h3>
+                <p>Valor</p>
+            </div>
 
-        <div class="card">
-            <h3>Título</h3>
-            <p>Valor</p>
-        </div>
+            <div class="card">
+                <h3>Título</h3>
+                <p>Valor</p>
+            </div>
 
-        <div class="card">
-            <h3>Título</h3>
-            <p>Valor</p>
-        </div>
+            <div class="card">
+                <h3>Título</h3>
+                <p>Valor</p>
+            </div>
 
-        <div class="card">
-            <h3>Título</h3>
-            <p>Valor</p>
-        </div>
+        </section>
 
-        <div class="card">
-            <h3>Título</h3>
-            <p>Valor</p>
-        </div>
+        <!-- Tabela -->
+        <section class="table-section">
 
-    </section>
+            <h2>Registros recentes</h2>
 
-    <!-- Tabela -->
-    <section class="table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Status</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
 
-        <h2>Registros recentes</h2>
+                <tbody>
+                    <tr>
+                        <td>#</td>
+                        <td>---</td>
+                        <td><span class="status ok">OK</span></td>
+                        <td>---</td>
+                    </tr>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Status</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
+                    <tr>
+                        <td>#</td>
+                        <td>---</td>
+                        <td><span class="status pending">Pendente</span></td>
+                        <td>---</td>
+                    </tr>
+                </tbody>
 
-            <tbody>
-                <tr>
-                    <td>#</td>
-                    <td>---</td>
-                    <td><span class="status ok">OK</span></td>
-                    <td>---</td>
-                </tr>
+            </table>
 
-                <tr>
-                    <td>#</td>
-                    <td>---</td>
-                    <td><span class="status pending">Pendente</span></td>
-                    <td>---</td>
-                </tr>
-            </tbody>
+        </section>
 
-        </table>
-
-    </section>
-
-</div>
-<script th:src="@{/js/home.js}"></script>
+    </div>
+    <script th:src="@{/js/home.js}"></script>
 </body>
+
 </html>

@@ -1,81 +1,76 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Funcionario</title>
     <link rel="stylesheet" th:href="@{/css/cadastro.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
 </head>
 
 <body>
-<!-- Topbar -->
-<header class="topbar">
-    <div class="logo-container">
-        <h2 class="logo">Sistema de ERP</h2>
-    </div>
-<!--    <div class="user">-->
-<!--        <span th:text="${usuario.usuario.nome}"></span>-->
-<!--        <img src="https://i.pravatar.cc/40" alt="avatar">-->
-<!--    </div>-->
-</header>
+    <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
+    <div class="main">
+        <div th:replace="~{fragments/fragments :: cabecalho}"></div>
+        <div class="alert-container">
 
-<div class="alert-container">
-
-    <div th:if="${sucesso}" class="alert alert-sucesso">
-        <span th:text="${sucesso}"></span>
-    </div>
-
-    <div th:if="${erro}" class="alert alert-erro">
-        <span th:text="${erro}"></span>
-    </div>
-
-</div>
-
-<div class="cadastro-container">
-    <form th:action="@{/funcionarios/cadastrar}" method="post" th:object="${usuarioDTO}" id="formProduto">
-        <div class="fundo">
-            <h2>Insira os dados do colaborador</h2>
-            <div class="dados">
-
-                <div class="input-group">
-                    <label>Nome</label>
-                    <input type="text" th:field="*{nome}" placeholder="Digite o nome do colaborador" required>
-                    <div th:errors="*{nome}"></div>
-                </div>
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" th:field="*{email}" placeholder="Digite o email" required>
-                    <div th:errors="*{email}" style="color:red"></div>
-                </div>
-
-                <div class="input-group">
-                    <label>Senha</label>
-                    <input type="password" th:field="*{senha}" placeholder="Digite a senha" required>
-                    <div th:errors="*{senha}"></div>
-                </div>
-
-                <div class="input-group">
-                    <label>Cargo</label>
-                    <select th:field="*{cargo}">
-                        <option value="CAIXA">Caixa</option>
-                        <option value="ESTOQUISTA">Estoquista</option>
-                        <option value="ADMIN">Admin</option>
-                    </select>
-                    <div th:errors="*{cargo}"></div>
-                </div>
-
-                <button class="cadastro" type="submit">Cadastrar</button>
-                <a th:href="@{/funcionarios}"><button class="cancelar" type="button">Cancelar</button></a>
-                <button class="apagar" type="reset" title="Limpar formulário">
-                    <img th:src="@{/img/borracha.png}" alt="Limpar" class="icone-borracha">
-                </button>
+            <div th:if="${sucesso}" class="alert alert-sucesso">
+                <span th:text="${sucesso}"></span>
             </div>
-        </form>
-</div>
 
-</div>
+            <div th:if="${erro}" class="alert alert-erro">
+                <span th:text="${erro}"></span>
+            </div>
+
+        </div>
+
+        <div class="cadastro-container">
+            <form th:action="@{/funcionarios/cadastrar}" method="post" th:object="${usuarioDTO}" id="formProduto">
+                <div class="fundo">
+                    <h2>Insira os dados do colaborador</h2>
+                    <div class="dados">
+
+                        <div class="input-group">
+                            <label>Nome</label>
+                            <input type="text" th:field="*{nome}" placeholder="Digite o nome do colaborador" required>
+                            <div th:errors="*{nome}"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" th:field="*{email}" placeholder="Digite o email" required>
+                            <div th:errors="*{email}" style="color:red"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Senha</label>
+                            <input type="password" th:field="*{senha}" placeholder="Digite a senha" required>
+                            <div th:errors="*{senha}"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Cargo</label>
+                            <select th:field="*{cargo}">
+                                <option value="CAIXA">Caixa</option>
+                                <option value="ESTOQUISTA">Estoquista</option>
+                                <option value="ADMIN">Admin</option>
+                            </select>
+                            <div th:errors="*{cargo}"></div>
+                        </div>
+
+                        <button class="cadastro" type="submit">Cadastrar</button>
+                        <a th:href="@{/funcionarios}"><button class="cancelar" type="button">Cancelar</button></a>
+                        <button class="apagar" type="reset" title="Limpar formulário">
+                            <img th:src="@{/img/borracha.png}" alt="Limpar" class="icone-borracha">
+                        </button>
+                    </div>
+            </form>
+        </div>
+
+    </div>
+    </div>
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/cadastro-funcionario.js}"></script>
 </body>
-
 </html>

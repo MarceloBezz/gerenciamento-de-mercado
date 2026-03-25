@@ -33,6 +33,19 @@ input:focus {
     border-color: #2d5bff;
 }
 
+.checkbox-group {
+    display: flex;
+    align-items: center; /* alinha verticalmente */
+    gap: 6px;            /* espaço entre checkbox e texto */
+    margin-top: -8px;    /* aproxima do campo de email */
+    margin-bottom: 10px;
+}
+
+.checkbox-group label {
+    font-size: 13px;
+    margin: 0; /* remove qualquer desalinhamento */
+}
+
 .btn-salvar {
     width: 100%;
     padding: 10px;
@@ -45,4 +58,57 @@ input:focus {
 
 .btn-salvar:hover {
     background: #1e45cc;
+}
+
+/* BOTÃO DE VOLTAR */
+.btn-voltar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    transition: background 0.2s;
+}
+
+.btn-voltar:hover {
+    background: #f0f0f0;
+}
+
+/* ALERTA DE SUCESSO AO ATUALIZAR */
+.alert-sucesso {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background-color: #d4edda;
+    color: #155724;
+
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #c3e6cb;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+    display: inline-block;
+    white-space: nowrap;
+
+    z-index: 9999;
+
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
