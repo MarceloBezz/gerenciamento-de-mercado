@@ -1,8 +1,11 @@
 package br.com.fatec.erp.service;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.com.fatec.erp.model.dto.UsuarioAtualizarDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +45,29 @@ public class UsuarioService {
             throw new Exception("Usuário já cadastrado!");
         }
         return usuarioRepository.save(usuario);
+    }
+
+    public Usuario buscarPorId(Long id) throws Exception {
+        return usuarioRepository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
+    }
+
+    public Usuario buscarPorEmail(String email) throws Exception {
+        return usuarioRepository.findByEmailIgnoreCase(email).orElseThrow(() -> new Exception("Usuário não encontrado"));
+    }
+
+    public List<Usuario> listarUsuario() {
+        return usuarioRepository.findAll();
+    }
+
+    @Transactional
+    public Usuario atualizar(UsuarioAtualizarDTO usuarioAtualizarDTO) throws Exception {
+    Usuario usuario = usuarioRepository.findById(usuarioAtualizarDTO.id()).get();
+        if (usuarioRepository.existsByEmailIgnoringCase(usuario.getEmail()) && !usuario.getEmail().equalsIgnoreCase(usuarioAtualizarDTO.email())) {
+            throw new Exception("Email já está cadastrado!");
+        }
+        usuario.setEmail(usuarioAtualizarDTO.email());
+
+        usuario.setSenha(passwordEncoder.encode(usuarioAtualizarDTO.senha()));
+        return usuario;
     }
 }
