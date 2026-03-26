@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link rel="stylesheet" th:href="@{/css/vendas.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
+    <title>Vendas</title>
+</head>
+
+<body>
+    <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
+
+    <main>
+
+        <div th:replace="~{fragments/fragments :: cabecalho}"></div>
+
+
+        <section class="conteudo">
+            <header>
+                <div class="titulo-pagina">
+                    <h1 class="titulo">Vendas</h1>
+                </div>
+            </header>
+
+            <section class="cards">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Total de vendas</h3>
+                    </div>
+                    <p id="valor-totalVendas"></p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Valor Total</h3>
+                    </div>
+                    <p id="valor-valor-total"></p>
+                </div>
+            </section>
+
+            <section class="barra-acoes">
+                <label class="texto-barra">De:</label>
+                <input type="date" name="data">
+
+                <label>Ate:</label>
+                <input type="date" name="data">
+
+                <button class="btn-buscar" type="submit">Buscar</button>
+            </section>
+
+            <section class="tabela-vendas">
+                <table id="tabela-vendas">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Valor</th>
+                            <th>Vendedor</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </section>
+
+
+            <section class="rodape-tabela">
+
+                <p id="texto-mostrando-produtos"></p>
+
+                <div class="paginacao">
+                    <button onclick="moverAtivoMenos()">&lt;</button>
+                    <button id="btn1" onclick="selecionarBotao(this)">1</button>
+                    <button id="btn2" onclick="selecionarBotao(this)">2</button>
+                    <button id="btn3" onclick="selecionarBotao(this)">3</button>
+                    <span>...</span>
+                    <button id="btn4" onclick="selecionarBotao(this)"></button>
+                    <button onclick="moverAtivoMais()">&gt;</button>
+                </div>
+
+            </section>
+        </section>
+    </main>
+</body>
+
+</html>

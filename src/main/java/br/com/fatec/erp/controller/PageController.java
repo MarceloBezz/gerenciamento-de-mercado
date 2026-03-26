@@ -70,6 +70,12 @@ public class PageController {
         return "estoque";
     }
 
+    @GetMapping("/vendas")
+    public String vendas(@AuthenticationPrincipal UsuarioSecurity usuario, Model model){
+        model.addAttribute("usuario", usuario.getUsuario());
+        return "vendas";
+    }
+
     @GetMapping("/meus-dados")
     public String meusDados(@AuthenticationPrincipal UsuarioSecurity usuarioSecurity, Model model) {
         Usuario usuario = usuarioSecurity.getUsuario();
