@@ -34,33 +34,37 @@
                     <form th:action="@{/produtos/cadastrar}" method="post" th:object="${produto}">
                         <input th:field="*{id}" hidden>
 
-                        <div class="bloco-nome">
-                            <label for="nome" class="form-label">Nome</label>
-                            <input id="nome" type="text" class="form-control" th:field="*{nome}"
-                                placeholder="Digite o nome do produto: " required>
-                        </div>
-
-                        <div class="bloco-descricao">
-                            <label for="descricao" class="form-label">Descrição</label>
-                            <input id="descricao" class="form-control" th:field="*{descricao}"
-                                placeholder="Digite a descrição para o produto: " required>
-                        </div>
-
                         <div class="linha">
-                            <div class="bloco-estoque">
-                                <label for="estoque" class="form-label">Estoque Mínimo</label>
-                                <input id="estoque" type="number" class="form-control"
-                                    th:field="*{quantidadeMinimaEstoque}"
-                                    placeholder="Digite a quantidade mínima que o produto deve ter em estoque: "
-                                    required>
+                            <div class="bloco-nome">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input id="nome" type="text" class="form-control" th:field="*{nome}"
+                                    placeholder="Digite o nome do produto: " required>
                             </div>
-
-
                             <div class="bloco-preco">
                                 <label for="preco" class="form-label">Preço</label>
                                 <input id="preco" type="text" class="form-control" th:field="*{valor}"
                                     placeholder="R$: " required>
                             </div>
+                        </div>
+
+                        <div class="linha">
+
+                            <div class="bloco-descricao">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <input id="descricao" class="form-control" th:field="*{descricao}"
+                                    placeholder="Digite a descrição para o produto: " required>
+                            </div>
+
+                            <div class="bloco-estoque">
+                                <label for="estoque" class="form-label">Estoque Mínimo</label>
+                                <input id="estoque" type="number" class="form-control"
+                                    th:field="*{quantidadeMinimaEstoque}"
+                                    placeholder="Digite o estoque mínimo do produto: "
+                                    required>
+                            </div>
+
+
+                            
                         </div>
 
                         <div class="bloco-botoes">

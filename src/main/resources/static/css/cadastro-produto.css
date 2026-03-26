@@ -34,6 +34,10 @@
     width: 100%;
     height: 30px;
     align-items: center;
+
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    background: white;
 }
 .bloco-descricao .form-control {
     display: flex;
@@ -41,32 +45,51 @@
     margin-bottom: 15px;
     border-radius: 7px;
     width: 100%;
-    height: 80px;
+    height: 30px;
     padding: 3px;
-    text-align: left;
+
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    background: white;
 
 }
 .bloco-estoque .form-control{
     border-radius: 7px;
     height: 30px;
+
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    background: white;
 }
 .bloco-preco .form-control{
     border-radius: 7px;
     height: 30px;
+
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    background: white;
+    
 }
 
 .linha {
     display: flex;
-    gap: 20px; /* espaço entre os campos */
-    
+    gap: 20px;
 }
 
-.linha > div {
-    flex: 1; /* cada um ocupa metade */
+.bloco-nome, .bloco-descricao {
+    flex: 3;
     display: flex;
     flex-direction: column;
-    
+    gap: 10px;
 }
+
+.bloco-preco, .bloco-estoque {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .bloco-botoes{
     display: flex;
     justify-content: center;
