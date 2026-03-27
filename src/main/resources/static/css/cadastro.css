@@ -5,27 +5,6 @@ body {
     padding: 0;
 }
 
-/* Topbar */
-
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-right: 20px;
-}
-
-.user img {
-    border-radius: 50%;
-}
-
 .cadastro-container {
     display: flex;
     justify-content: center;
@@ -34,7 +13,7 @@ body {
 }
 
 .fundo {
-    margin-top: 100px;
+    margin-top: 20px;
     display: inline-block;
     background: white;
     padding: 30px;
@@ -46,7 +25,7 @@ body {
 }
 
 .dados {
-    margin-top: 100px;
+    margin-top: 50px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px 40px;
@@ -62,22 +41,6 @@ select {
     box-sizing: border-box;
     height: 40px;
     background-color: white;
-}
-
-.logo-container{
-    display: inline-block;
-    
-}
-
-.logo {
-    color: #ffffff;
-    background-color: #0f172a;
-    padding: 15px 25px;
-    font-size: 24px;
-    font-weight: bold;
-    border-radius: 0 0 8px 0;
-    letter-spacing: 0.5px;
-    margin: 0;
 }
 
 .input-group {
@@ -96,75 +59,87 @@ select {
 
 
 
-.cadastro {
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
+.botoes {
+    grid-column: 1 / -1; /* Ocupa as duas colunas do grid */
+    display: flex;
+    justify-content: center; /* Centraliza o grupo no meio da tela */
+    align-items: center;
+    gap: 15px; /* Espaço entre um botão e outro */
+    margin-top: 30px;
     width: 100%;
-    /* Faz o botão ocupar a largura da coluna dele */
-    max-width: 200px;
-    /* Limita para não ficar um botão gigante */
-    justify-self: center;
-    /* Centraliza o botão dentro da coluna do grid */
-    height: 45px
 }
 
-.cadastro:hover {
-    background-color: #0056b3;
+.cadastro {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 180px;
+    height: 45px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .cancelar {
-    padding: 10px;
+    background-color: #ff2d2d;
+    color: white;
     border: none;
-    background-color: rgb(250, 29, 29);
-    color: black;
-    border-radius: 4px;
+    border-radius: 6px;
+    width: 120px;
+    height: 45px;
     cursor: pointer;
-    width: 100%;
-    /* Faz o botão ocupar a largura da coluna dele */
-    max-width: 200px;
-    /* Limita para não ficar um botão gigante */
-    justify-self: center;
-    /* Centraliza o botão dentro da coluna do grid */
-    height: 45px
 }
+
+.apagar {
+    background-color: #495057;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.apagar i {
+    color: white; 
+    font-size: 1.4rem; 
+    transition: transform 0.3s ease;
+}
+
+.apagar:hover {
+    background-color: #343a40;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.apagar:hover i {
+    transform: rotate(-15deg) scale(1.1);
+}
+
+.apagar:active {
+    transform: scale(0.95);
+}
+
+/* Hover - Botão Cadastrar */
+.cadastro:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.35);
+}
+
 
 .cancelar:hover {
-    background-color: rgb(195, 29, 29);
+    background-color: #d11a1a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 45, 45, 0.35);
 }
 
-.apagar{
-    background-color: #f8f9fa; /* Fundo cinza claro */
-    border: 1px solid #dee2e6;  /* Borda suave */
-    border-radius: 8px;         /* Cantos arredondados */
-    width: 44px;                /* Largura fixa do botão */
-    height: 44px;               /* Altura fixa do botão */
-    display: flex;              /* Para centralizar o ícone */
-    align-items: center;        /* Centraliza verticalmente */
-    justify-content: center;    /* Centraliza horizontalmente */
-    cursor: pointer;            /* Indica que é clicável */
-    transition: all 0.2s ease;  /* Transição suave para hover */
-    padding: 0;
-}
-
-.apagar:hover{
-    background-color: #e9ecef;  /* Fundo um pouco mais escuro no hover */
-    border-color: #adb5bd;
-}
-
-.icone-borracha{
-    width: 40px;   /* Tamanho do ícone (ajuste conforme a sua imagem) */
-    height: 40px;  /* Tamanho do ícone */
-    object-fit: contain; /* Garante que a imagem se encaixe sem cortar */
-    filter: grayscale(100%) brightness(50%); /* Deixa a imagem cinza escuro */
-    transition: filter 0.2s ease; /* Transição para o filtro */
-}
-
-.icone-borracha:hover{
-    filter: grayscale(100%) brightness(30%);
+.cadastro, .cancelar {
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .alert-container{
