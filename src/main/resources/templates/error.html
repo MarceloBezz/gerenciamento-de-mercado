@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+    <title>Erro 404</title>
+</head>
+
+<body>
+    <main>
+        <div class="voltar">
+            <a th:href="@{/home}" class="btn-voltar">Voltar</a>
+        </div>
+
+        <div class="conteudo">
+            <div class="texto">
+                <h1 class="aviso">Erro 404 Página inexistente</h1>
+            </div>
+
+            <div class="imagem">
+                <img th:src="@{/img/imagemerro.png}" class="imagem-erro" alt="Erro 404">
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

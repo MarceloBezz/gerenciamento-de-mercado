@@ -1,0 +1,67 @@
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f6fb;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+main{
+    width:100%;
+    max-width:900px;
+}
+
+.voltar{
+    margin-bottom:20px;
+}
+
+.btn-voltar{
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-voltar:hover{
+    background:#4338ca;
+}
+
+.conteudo{
+    background:#fff;
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+}
+
+.aviso{
+    margin-bottom:30px;
+    font-size:32px;
+    color:#1f2937;
+}
+
+.imagem{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+
+.imagem-erro{
+    width:350px;
+    max-width:100%;
+    border-radius:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.imagem-erro:hover{
+    transform:scale(1.05);
+}

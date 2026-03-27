@@ -84,5 +84,10 @@ public class PageController {
         model.addAttribute("usuarioDTO", dto);
         return "meus-dados";
     }
+
+    @GetMapping("/error")
+    public String erro(@AuthenticationPrincipal UsuarioSecurity usuarioSecurity){
+        return "error";
+    }
     
 }
