@@ -16,3 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } 
     linkSelected.classList.add("active")
 })
+
+setTimeout(() => {
+    const alert = document.getElementById("alert-sucesso");
+    if (alert) {
+        alert.style.opacity = "0";
+        setTimeout(() => alert.remove(), 500);
+    }
+}, 4500);
