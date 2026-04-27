@@ -1,5 +1,15 @@
 // Filtros
 let valorFiltro = "", valorStatus = ""
+const btn1 = document.getElementById("btn1")
+const btn4 = document.getElementById("btn4")
+const linkSelected = document.getElementById("link-estoque")
+const filtroProduto = document.getElementById("filtro-produto")
+const btnLimparFiltro = document.querySelector(".btn-limpar-filtro")
+const selectStatus = document.querySelector(".filtro-status")
+
+
+
+
 
 // ======================= BOTÕES INFERIORES ================================
 function moverAtivoMais() {
@@ -18,22 +28,13 @@ function moverAtivoMais() {
                     botoes[i + 1].classList.add("pagina-ativa");
                     page = Number(botoes[i + 1].textContent) - 1;
                 }
-                carregarProdutos();
+                carregarVendas();
                 alterarTextoMostrandoProdutos(1)
             }
             break;
         }
     }
 }
-
-async function carregarVendas(){
-    let url = `http://localhost:8080/api/financeiro/dashboard?page=${page}&size=${size}&produto=${valorFiltro}`
-    if(valorStatus !== "") url += `&status=${valorStatus}`
-    const resposta = await fetch(url);
-    const vendas = await resposta.json();
-    preencherTabela(vendas.content);
-}
-
 
 function moverAtivoMenos() {
     const botoes = document.querySelectorAll(".paginacao button");
@@ -51,7 +52,7 @@ function moverAtivoMenos() {
                     botoes[j].textContent = Number(botoes[j].textContent) - 1
                 }
                 page = Number(botoes[i].textContent) - 1;
-                carregarProdutos();
+                carregarVendas();
                 alterarTextoMostrandoProdutos(-1)
             }
             break;
@@ -66,10 +67,41 @@ function selecionarBotao(botaoSelecionado) {
             botao.classList.remove("pagina-ativa")
             botaoSelecionado.classList.add("pagina-ativa")
             page = Number(botaoSelecionado.textContent) - 1;
-            carregarProdutos();
+            carregarVendas();
 
             const diferenca = Number(botaoSelecionado.textContent) - Number(botao.textContent)
             alterarTextoMostrandoProdutos(diferenca)
         }
     })
+}
+
+async function carregarVendas(){
+    //TODO, implementar a busca de vendas
+    let url = `http://localhost:8080/api/financeiro/dashboard?page=${page}&size=${size}&produto=${valorFiltro}`
+    if(valorStatus !== "") url += `&status=${valorStatus}`
+    const resposta = await fetch(url);
+    const vendas = await resposta.json();
+    preencherTabela(vendas.content);
+}
+
+// ======================= PREENCHIMENTOS ========================================
+function preencherTabela(vendas) {
+    const tbody = document.querySelector("#tabela-vendas tbody");
+    tbody.innerHTML = "";
+    produtos.forEach(item => {
+        const linhaStatus = `
+    <td class="status-container">
+        ${status.map(s => `<span class="status ${s.classe}">${s.texto}</span>`).join("")}
+    </td>
+`;
+        const linha = `
+            <tr>
+                <td>${venda.id}</td>
+                <td>${venda.valor}</td>
+                <td>${venda.vendedor}</td>
+                <td>${venda.data}</td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML("beforeend", linha);
+    });
 }
