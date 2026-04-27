@@ -1,11 +1,11 @@
 package br.com.fatec.erp.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.com.fatec.erp.model.dto.UsuarioAtualizarDTO;
-import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,16 +59,23 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    @Transactional
-    public Usuario atualizar(UsuarioAtualizarDTO usuarioAtualizarDTO) throws Exception {
-    Usuario usuario = usuarioRepository.findById(usuarioAtualizarDTO.id()).get();
-        if (usuarioRepository.existsByEmailIgnoringCase(usuario.getEmail()) && !usuario.getEmail().equalsIgnoreCase(usuarioAtualizarDTO.email()) && usuarioAtualizarDTO.email() != null) {
-            throw new Exception("Email já está cadastrado!");
+    public void atualizar(Long id, UsuarioAtualizarDTO dto) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (dto.email() != null && !dto.email().isBlank()) {
+            usuario.setEmail(dto.email());
         }
-        if (usuarioAtualizarDTO.email() != null)
-            usuario.setEmail(usuarioAtualizarDTO.email());
-        if (usuarioAtualizarDTO.senha() != null)
-            usuario.setSenha(passwordEncoder.encode(usuarioAtualizarDTO.senha()));
-        return usuario;
+
+        if (dto.senha() != null && !dto.senha().isBlank()) {
+            usuario.setSenha(passwordEncoder.encode(dto.senha()));
+        }
+
+        usuarioRepository.save(usuario);
+    }
+
+    public void deletar(Long id) {
+        usuarioRepository.deleteById(id);
     }
 }
+
