@@ -76,9 +76,7 @@ function selecionarBotao(botaoSelecionado) {
 }
 
 async function carregarVendas(){
-    //TODO, implementar a busca de vendas
-    let url = `http://localhost:8080/api/financeiro/dashboard?page=${page}&size=${size}&produto=${valorFiltro}`
-    if(valorStatus !== "") url += `&status=${valorStatus}`
+    let url = `http://localhost:8080/api/vendas?page=${page}&size=${size}`
     const resposta = await fetch(url);
     const vendas = await resposta.json();
     preencherTabela(vendas.content);
@@ -93,7 +91,7 @@ function preencherTabela(vendas) {
     <td class="status-container">
         ${status.map(s => `<span class="status ${s.classe}">${s.texto}</span>`).join("")}
     </td>
-`;
+`;      //TODO, implementar tela pop-up com produtos da venda
         const linha = `
             <tr>
                 <td>${venda.id}</td>
