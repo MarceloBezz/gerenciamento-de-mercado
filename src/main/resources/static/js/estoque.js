@@ -107,10 +107,6 @@ function preencherTabela(produtos) {
                 </td>
             </tr>
         `;
-        // <a href="/produtos/${item.estoque.produto.id}" class="btn-editar" title="Editar produto">
-        //                 ✏️
-        //             </a>
-        // <i class="bi bi-pencil"></i>
         tbody.insertAdjacentHTML("beforeend", linha);
     });
 }

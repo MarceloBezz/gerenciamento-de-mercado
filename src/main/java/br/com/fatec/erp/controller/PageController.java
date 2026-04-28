@@ -49,9 +49,10 @@ public class PageController {
 
     @GetMapping("/funcionarios/cadastrar")
     public String telaCadastrarFuncionario(Model model, @AuthenticationPrincipal UsuarioSecurity usuarioSecurity) {
-        model.addAttribute("usuario", usuarioSecurity.getUsuario());
-        model.addAttribute("usuarioDTO", new UsuarioDTO(null, null, null, null, null));
-
+       model.addAttribute("usuario", usuarioSecurity.getUsuario());
+        if (!model.containsAttribute("usuarioDTO")) {
+            model.addAttribute("usuarioDTO", new UsuarioDTO(null, null, null, null, null));
+        }
         return "cadastro-funcionario";
     }
 
@@ -63,7 +64,7 @@ public class PageController {
             model.addAttribute("produto", produto);
         } else {
             model.addAttribute("produto", new ProdutoDTO(null, null, null, null, null));
-        }
+        } 
         model.addAttribute("usuario", usuario.getUsuario());
 
         return "cadastro-produto";

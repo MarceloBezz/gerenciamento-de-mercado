@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.com.fatec.erp.model.dto.UsuarioAtualizarDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,7 @@ public class UsuarioService {
     }
 
     public List<Usuario> listarUsuario() {
-        return usuarioRepository.findAll();
+        return usuarioRepository.findByAtivoTrue();
     }
 
     public void atualizar(Long id, UsuarioAtualizarDTO dto) {
@@ -74,8 +75,10 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
+    @Transactional
     public void deletar(Long id) {
-        usuarioRepository.deleteById(id);
+        var usuario = usuarioRepository.findById(id).orElseThrow();
+        usuario.setAtivo(false);
     }
 }
 

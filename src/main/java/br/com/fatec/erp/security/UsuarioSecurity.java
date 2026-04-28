@@ -33,4 +33,9 @@ public class UsuarioSecurity implements UserDetails {
     public String getUsername() {
         return usuario.getEmail();
     }
+
+    @Override
+    public boolean isEnabled() {
+        return usuario.isAtivo();
+    }
 }
