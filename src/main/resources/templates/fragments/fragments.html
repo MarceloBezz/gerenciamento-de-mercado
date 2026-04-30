@@ -50,6 +50,9 @@
                     <a th:href="@{/caixa}">
                         <li id="link-caixa">Caixa</li>
                     </a>
+                    <a th:href="@{/venda/registro}">
+                        <li id="link-registro-venda">Registrar Venda</li>
+                    </a>
                 </div>
                 <div sec:authorize="hasRole('ADMIN')">
                     <a th:href="@{/funcionarios}">

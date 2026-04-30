@@ -76,6 +76,7 @@ public class PageController {
         return "vendas";
     }
 
+
     @GetMapping("/meus-dados")
     public String meusDados(@AuthenticationPrincipal UsuarioSecurity usuarioSecurity, Model model) {
         Usuario usuario = usuarioSecurity.getUsuario();
@@ -88,6 +89,12 @@ public class PageController {
     @GetMapping("/error")
     public String erro(@AuthenticationPrincipal UsuarioSecurity usuarioSecurity){
         return "error";
+    }
+
+    @GetMapping("/venda/registro")
+    public String registroVenda(@AuthenticationPrincipal UsuarioSecurity usuario, Model model){
+        model.addAttribute("usuario", usuario.getUsuario());
+        return "registro-venda";
     }
     
 }

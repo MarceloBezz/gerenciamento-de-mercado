@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Vendas - ERP</title>
+  <link rel="stylesheet" th:href="@{/css/registro-venda.css}">
+  <link rel="stylesheet" th:href="@{/css/fragments.css}">
+</head>
+<body>
+  <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
+
+  <div class="main">
+    <div th:replace="~{fragments/fragments :: cabecalho}"></div>
+
+    <main class="container">
+      <div class="header">
+        <h1>Registro de Venda</h1>
+        <div class="total-box">
+          Valor Total: <span id="valor-total">R$ 0,00</span>
+        </div>
+      </div>
+
+      <section class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>NOME</th>
+              <th>QTD</th>
+              <th>PREÇO</th>
+            </tr>
+          </thead>
+          <tbody id="itens-venda"></tbody>
+        </table>
+      </section>
+
+      <div style="display:flex; justify-content:space-between; margin-top:20px; gap:15px;">
+        <button class="btn-icon" onclick="abrirPopup()">+ Adicionar Item</button>
+        <button class="btn-finalizar">FINALIZAR</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="popup" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Selecionar Produtos do Estoque</span>
+        <span class="close" onclick="fecharPopup()">✖</span>
+      </div>
+
+      <div style="margin:15px 0; display:flex; gap:10px;">
+        <input
+          type="text"
+          id="filtroProduto"
+          placeholder="Filtrar por ID ou Nome"
+          style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc;"
+        />
+        <button onclick="filtrarProdutos()">Buscar</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Estoque</th>
+            <th>Qtd</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="lista-produtos-modal"></tbody>
+      </table>
+        <div style="display:flex; justify-content:space-between; margin-top:10px;">
+          <button id="btn-prev" onclick="paginaAnterior()">⬅</button>
+          <button id="btn-next" onclick="proximaPagina()">➡</button>
+       </div>
+    </div>
+  </div>
+  <script th:src="@{/js/registro-venda.js}"></script>
+</body>
+</html>
