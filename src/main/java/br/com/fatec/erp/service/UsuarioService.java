@@ -1,6 +1,7 @@
 package br.com.fatec.erp.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,19 +57,28 @@ public class UsuarioService {
     }
 
     public List<Usuario> listarUsuario() {
-        return usuarioRepository.findAll();
+        return usuarioRepository.findByAtivoTrue();
+    }
+
+    public void atualizar(Long id, UsuarioAtualizarDTO dto) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (dto.email() != null && !dto.email().isBlank()) {
+            usuario.setEmail(dto.email());
+        }
+
+        if (dto.senha() != null && !dto.senha().isBlank()) {
+            usuario.setSenha(passwordEncoder.encode(dto.senha()));
+        }
+
+        usuarioRepository.save(usuario);
     }
 
     @Transactional
-    public Usuario atualizar(UsuarioAtualizarDTO usuarioAtualizarDTO) throws Exception {
-    Usuario usuario = usuarioRepository.findById(usuarioAtualizarDTO.id()).get();
-        if (usuarioRepository.existsByEmailIgnoringCase(usuario.getEmail()) && !usuario.getEmail().equalsIgnoreCase(usuarioAtualizarDTO.email()) && usuarioAtualizarDTO.email() != null) {
-            throw new Exception("Email já está cadastrado!");
-        }
-        if (usuarioAtualizarDTO.email() != null)
-            usuario.setEmail(usuarioAtualizarDTO.email());
-        if (usuarioAtualizarDTO.senha() != null)
-            usuario.setSenha(passwordEncoder.encode(usuarioAtualizarDTO.senha()));
-        return usuario;
+    public void deletar(Long id) {
+        var usuario = usuarioRepository.findById(id).orElseThrow();
+        usuario.setAtivo(false);
     }
 }
+

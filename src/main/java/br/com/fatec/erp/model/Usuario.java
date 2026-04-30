@@ -18,12 +18,14 @@ public class Usuario {
     private String senha;
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
+    private boolean ativo;
 
     public Usuario(UsuarioDTO dto) {
         this.email = dto.email();
         this.nome = dto.nome();
         this.senha = dto.senha();
         this.cargo = dto.cargo();
+        ativo = true;
     }
 
     public Usuario() {
@@ -59,5 +61,13 @@ public class Usuario {
 
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

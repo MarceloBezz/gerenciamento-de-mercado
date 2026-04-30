@@ -1,5 +1,6 @@
 package br.com.fatec.erp.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByEmailIgnoreCase(String username);
 
     boolean existsByEmailIgnoringCase(String email);
+
+    List<Usuario> findByAtivoTrue();
 }

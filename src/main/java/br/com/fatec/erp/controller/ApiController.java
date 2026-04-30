@@ -1,9 +1,11 @@
 package br.com.fatec.erp.controller;
 
+import br.com.fatec.erp.model.dto.DadosVenda;
 import br.com.fatec.erp.model.dto.DashboardEstoqueResumo;
 import br.com.fatec.erp.model.dto.EstoqueProdutoValidade;
 import br.com.fatec.erp.model.dto.LoteDTO;
 import br.com.fatec.erp.model.dto.VendaProdutoDTO;
+import br.com.fatec.erp.model.venda.Venda;
 import br.com.fatec.erp.service.EstoqueService;
 import br.com.fatec.erp.service.LoteService;
 import br.com.fatec.erp.service.VendaService;
@@ -74,4 +76,10 @@ public class ApiController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // @GetMapping("/vendas")
+    // public Page<DadosVenda> listarVendas(Pageable pageable ){
+    //     var vendas = vendaService.listarVendas(pageable);
+    //     return vendas;
+    // }
 }

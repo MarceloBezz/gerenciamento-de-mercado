@@ -11,75 +11,81 @@
 </head>
 
 <body>
-    <div th:replace="~{fragments/fragments :: barra-lateral}"></div>
-    <div class="main">
-        <div th:replace="~{fragments/fragments :: cabecalho}"></div>
-        <div class="alert-container">
+<div th:replace="~{fragments/fragments :: barra-lateral}"></div>
+<div class="main">
+    <div th:replace="~{fragments/fragments :: cabecalho}"></div>
+    <div class="alert-container">
 
-            <div th:if="${sucesso}" class="alert alert-sucesso">
-                <span th:text="${sucesso}"></span>
-            </div>
-
-            <div th:if="${erro}" class="alert alert-erro">
-                <span th:text="${erro}"></span>
-            </div>
-
+        <div th:if="${sucesso}" class="alert alert-sucesso">
+            <span th:text="${sucesso}"></span>
         </div>
 
-        <div class="cadastro-container">
-            <form th:action="@{/funcionarios/cadastrar}" method="post" th:object="${usuarioDTO}" id="formProduto">
-                <div class="fundo">
-                    <h2>Insira os dados do colaborador</h2>
-                    <div class="dados">
+        <div th:if="${erro}" class="alert alert-erro">
+            <span th:text="${erro}"></span>
+        </div>
 
-                        <div class="input-group">
-                            <label>Nome</label>
-                            <input type="text" th:field="*{nome}" placeholder="Digite o nome do colaborador" required>
-                            <div th:errors="*{nome}"></div>
-                        </div>
+    </div>
 
-                        <div class="input-group">
-                            <label>Email</label>
-                            <input type="email" th:field="*{email}" placeholder="Digite o email" required>
-                            <div th:errors="*{email}" style="color:red"></div>
-                        </div>
+    <div class="cadastro-container">
+        <form th:action="${usuarioDTO.id} != null ? @{/funcionarios/atualizar} : @{/funcionarios/cadastrar}"
+              method="post" th:object="${usuarioDTO}" id="formProduto">
+            <div class="fundo">
+                <h2>Insira os dados do colaborador</h2>
+                <div class="dados">
+                    <input type="hidden" th:field="*{id}">
 
-                        <div class="input-group">
-                            <label>Senha</label>
-                            <input type="password" th:field="*{senha}" placeholder="Digite a senha" required>
-                            <div th:errors="*{senha}"></div>
-                        </div>
+                    <div class="input-group">
+                        <label>Nome</label>
+                        <input type="text" th:field="*{nome}" placeholder="Digite o nome do colaborador" required>
+                        <div th:errors="*{nome}"></div>
+                    </div>
 
-                        <div class="input-group">
-                            <label>Cargo</label>
-                            <select th:field="*{cargo}">
-                                <option value="CAIXA">Caixa</option>
-                                <option value="ESTOQUISTA">Estoquista</option>
-                                <option value="ADMIN">Admin</option>
-                            </select>
-                            <div th:errors="*{cargo}"></div>
-                        </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" th:field="*{email}" placeholder="Digite o email" required>
+                        <div th:errors="*{email}" style="color:red"></div>
+                    </div>
 
-                        <div class="botoes">
-                            <button class="cadastro" type="submit">Cadastrar</button>
-                            <a th:href="@{/funcionarios}"><button class="cancelar" type="button">Cancelar</button></a>
+                    <div class="input-group">
+                        <label>Senha</label>
+                        <input type="password" th:field="*{senha}" placeholder="Digite a senha"
+                               th:required="${usuarioDTO.id} == null">
+                        <div th:errors="*{senha}"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Cargo</label>
+                        <select th:field="*{cargo}">
+                            <option value="CAIXA">Caixa</option>
+                            <option value="ESTOQUISTA">Estoquista</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                        <div th:errors="*{cargo}"></div>
+                    </div>
+
+                    <div class="botoes">
+                        <button class="cadastro" type="submit"
+                                th:text="${usuarioDTO.id} != null ? 'Atualizar' : 'Cadastrar'">
+                        </button>
+                        <a th:href="@{/funcionarios}">
+                            <button class="cancelar" type="button">Cancelar</button>
+                        </a>
 
 
-
-                            <button class="apagar" type="reset" title="Limpar formulário">
-                                <i class="bi bi-eraser-fill"></i>
-                            </button>
-
-                        </div>
+                        <button class="apagar" type="reset" title="Limpar formulário">
+                            <i class="bi bi-eraser-fill"></i>
+                        </button>
 
                     </div>
-            </form>
-        </div>
 
+                </div>
+        </form>
     </div>
-    </div>
-    <script th:src="@{/js/home.js}"></script>
-    <script th:src="@{/js/cadastro-funcionario.js}"></script>
+
+</div>
+</div>
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/cadastro-funcionario.js}"></script>
 </body>
 
 </html>
