@@ -1,11 +1,9 @@
 package br.com.fatec.erp.controller;
 
-import br.com.fatec.erp.model.dto.DadosVenda;
 import br.com.fatec.erp.model.dto.DashboardEstoqueResumo;
 import br.com.fatec.erp.model.dto.EstoqueProdutoValidade;
 import br.com.fatec.erp.model.dto.LoteDTO;
 import br.com.fatec.erp.model.dto.VendaProdutoDTO;
-import br.com.fatec.erp.model.venda.Venda;
 import br.com.fatec.erp.service.EstoqueService;
 import br.com.fatec.erp.service.LoteService;
 import br.com.fatec.erp.service.VendaService;
@@ -30,11 +28,11 @@ public class ApiController {
         this.vendaService = vendaService;
     }
 
+    // ================= DASHBOARD FINANCEIRO =================
     @GetMapping("/financeiro/dashboard")
     public Page<EstoqueProdutoValidade> listarProdutos(Pageable pageable, @RequestParam(required = false) String produto,
                                                        @RequestParam(required = false) String status) {
-        var produtos = estoqueService.listarEstoqueComProdutos(pageable, produto, status);
-        return produtos;
+        return estoqueService.listarEstoqueComProdutos(pageable, produto, status);
     }
 
     @GetMapping("/financeiro/dashboard/resumo")
@@ -42,21 +40,13 @@ public class ApiController {
         return estoqueService.buscarResumo();
     }
 
+    // ================= ENTRADAS E SAIDAS =================
     @GetMapping("/financeiro/entradas-saidas")
     public void listarEntradasESaidas(@RequestParam(required = false) String periodo) {
         // TODO Implementar método
     }
 
-    @GetMapping("/financeiro/vendas/vendedores")
-    public void listarVendasPorVendedores() {
-        // TODO Implementar método
-    }
-
-    @GetMapping("/financeiro/vendas/produtos")
-    public void listarProdutosVendidos(@RequestParam(required = false) String periodo) {
-        // TODO Implementar método
-    }
-
+    // ================= GESTÃO DE LOTES =================
     @PostMapping("/lote")
     public ResponseEntity<?> cadastrarLote(@RequestBody @Valid LoteDTO dto) {
         try {
@@ -67,6 +57,7 @@ public class ApiController {
         }
     }
 
+    // ================= GESTÃO DE VENDAS =================
     @PostMapping("/vendas")
     public ResponseEntity<?> cadastrarVenda(@RequestBody List<VendaProdutoDTO> dtos) {
         try {
@@ -76,10 +67,4 @@ public class ApiController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-    // @GetMapping("/vendas")
-    // public Page<DadosVenda> listarVendas(Pageable pageable ){
-    //     var vendas = vendaService.listarVendas(pageable);
-    //     return vendas;
-    // }
 }

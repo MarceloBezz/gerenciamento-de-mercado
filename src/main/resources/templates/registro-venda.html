@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro de Vendas - ERP</title>
+  
+  <!-- TOKENS CSRF PARA SEGURANÇA -->
+  <meta name="_csrf" th:content="${_csrf?.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
+
   <link rel="stylesheet" th:href="@{/css/registro-venda.css}">
   <link rel="stylesheet" th:href="@{/css/fragments.css}">
 </head>
@@ -36,7 +41,7 @@
 
       <div style="display:flex; justify-content:space-between; margin-top:20px; gap:15px;">
         <button class="btn-icon" onclick="abrirPopup()">+ Adicionar Item</button>
-        <button class="btn-finalizar">FINALIZAR</button>
+        <button class="btn-finalizar" onclick="finalizarVenda()">FINALIZAR</button>
       </div>
     </main>
   </div>
