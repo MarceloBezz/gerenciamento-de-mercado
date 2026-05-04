@@ -48,7 +48,7 @@ public class VendaService {
         return new DadosVenda(vendaRepository.save(venda));
     }
 
-    // public Page<Venda> listarVendas(Pageable pageable) {
-    //     return vendaRepository.findAll(pageable).map(v -> new DadosVenda(v));
-    // }
+    public Page<DadosVenda> listarVendas(Pageable pageable) {
+        return vendaRepository.findAll(pageable).map(v -> new DadosVenda(v));
+     }
 }

@@ -7,8 +7,13 @@ const filtroProduto = document.getElementById("filtro-produto")
 const btnLimparFiltro = document.querySelector(".btn-limpar-filtro")
 const selectStatus = document.querySelector(".filtro-status")
 
+let page = 0, size = 8;
 
-
+let mostrandoVendas = {
+    inicio: 1,
+    fim: size,
+    total: 0
+}
 
 
 // ======================= BOTÕES INFERIORES ================================
@@ -29,7 +34,7 @@ function moverAtivoMais() {
                     page = Number(botoes[i + 1].textContent) - 1;
                 }
                 carregarVendas();
-                alterarTextoMostrandoProdutos(1)
+                alterarTextoMostrandoVendasmostrandoVendas(1)
             }
             break;
         }
@@ -46,14 +51,14 @@ function moverAtivoMenos() {
                 botoes[i - 1].classList.add("pagina-ativa");
                 page = Number(botoes[i - 1].textContent) - 1;
                 carregarProdutos();
-                alterarTextoMostrandoProdutos(-1)
+                alterarTextoMostrandoVendasmostrandoVendas(-1)
             } else if (i === 1 && (Number(botoes[i].textContent) > 1)) {
                 for (let j = 1; j <= 3; j++) {
                     botoes[j].textContent = Number(botoes[j].textContent) - 1
                 }
                 page = Number(botoes[i].textContent) - 1;
                 carregarVendas();
-                alterarTextoMostrandoProdutos(-1)
+                alterarTextoMostrandoVendasmostrandoVendas(-1)
             }
             break;
         }
@@ -70,12 +75,12 @@ function selecionarBotao(botaoSelecionado) {
             carregarVendas();
 
             const diferenca = Number(botaoSelecionado.textContent) - Number(botao.textContent)
-            alterarTextoMostrandoProdutos(diferenca)
+            alterarTextoMostrandoVendasmostrandoVendas(diferenca)
         }
     })
 }
 
-async function carregarVendas(){
+async function carregarVendas() {
     let url = `http://localhost:8080/api/vendas?page=${page}&size=${size}`
     const resposta = await fetch(url);
     const vendas = await resposta.json();
@@ -86,20 +91,30 @@ async function carregarVendas(){
 function preencherTabela(vendas) {
     const tbody = document.querySelector("#tabela-vendas tbody");
     tbody.innerHTML = "";
-    produtos.forEach(item => {
-        const linhaStatus = `
-    <td class="status-container">
-        ${status.map(s => `<span class="status ${s.classe}">${s.texto}</span>`).join("")}
-    </td>
-`;      //TODO, implementar tela pop-up com produtos da venda
+    vendas.forEach(item => {
+        //TODO, implementar tela pop-up com produtos da venda
         const linha = `
             <tr>
-                <td>${venda.id}</td>
-                <td>${venda.valor}</td>
-                <td>${venda.vendedor}</td>
-                <td>${venda.data}</td>
+                <td>${item.idVenda}</td>
+                <td>${item.total}</td>
+                <td>${item.idVendedor}</td>
+                <td>${item.data}</td>
             </tr>
         `;
         tbody.insertAdjacentHTML("beforeend", linha);
     });
 }
+
+function preencheTotal() {
+    mostrandoVendas.total = resumo.totalProdutos;
+
+    document.getElementById("texto-mostrando-produtos").textContent = `Mostrando ${mostrandoVendas.inicio} - ${mostrandoVendas.fim} de ${mostrandoVendas.total} produtos`
+    let restoDivisao = mostrandoVendas.total % size
+    if (restoDivisao === 0) document.getElementById("btn4").textContent = Math.floor(mostrandoVendas.total / size)
+    else document.getElementById("btn4").textContent = Math.floor(mostrandoVendas.total / size) + 1
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    carregarVendas();
+    preencheTotal();
+});

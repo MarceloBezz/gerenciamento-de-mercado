@@ -1,5 +1,18 @@
 package br.com.fatec.erp.controller;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.fatec.erp.model.dto.DadosVenda;
 import br.com.fatec.erp.model.dto.DashboardEstoqueResumo;
 import br.com.fatec.erp.model.dto.EstoqueProdutoValidade;
 import br.com.fatec.erp.model.dto.LoteDTO;
@@ -8,12 +21,6 @@ import br.com.fatec.erp.service.EstoqueService;
 import br.com.fatec.erp.service.LoteService;
 import br.com.fatec.erp.service.VendaService;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -66,5 +73,11 @@ public class ApiController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+     @GetMapping("/vendas")
+    public Page<DadosVenda> listarVendas(Pageable pageable ){
+        var vendas = vendaService.listarVendas(pageable);
+        return vendas;
     }
 }

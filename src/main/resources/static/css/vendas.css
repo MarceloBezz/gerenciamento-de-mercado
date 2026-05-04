@@ -55,8 +55,6 @@ main {
 }
 
 .tabela-vendas {
-    margin-top: 8px;
-    display: flex;
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -76,6 +74,17 @@ main {
     background: #f9fafb;
 }
 
+.tabela-vendas td {
+    padding: 16px;
+    border-top: 1px solid #f1f1f1;
+    font-size: 14px;
+}
+
+.tabela-vendas tr:hover {
+    background: #f9fafb;
+}
+
+/* ===== RODAPÉ DA TABELA ===== */
 .rodape-tabela {
     margin-top: 15px;
     display: flex;
