@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.fatec.erp.model.Produto;
 import br.com.fatec.erp.model.Usuario;
 import br.com.fatec.erp.model.dto.DadosVenda;
+import br.com.fatec.erp.model.dto.DashboardVendasResumo;
 import br.com.fatec.erp.model.dto.VendaProdutoDTO;
 import br.com.fatec.erp.model.venda.Venda;
 import br.com.fatec.erp.model.venda.VendaProduto;
@@ -51,4 +52,8 @@ public class VendaService {
     public Page<DadosVenda> listarVendas(Pageable pageable) {
         return vendaRepository.findAll(pageable).map(v -> new DadosVenda(v));
      }
+
+    /*public DashboardVendasResumo buscarResumo(){
+        return vendaRepository.buscarResumo();
+    }*/
 }

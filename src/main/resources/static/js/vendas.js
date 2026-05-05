@@ -87,6 +87,12 @@ async function carregarVendas() {
     preencherTabela(vendas.content);
 }
 
+async function carregaResumoVendas() {
+    const resposta = await fetch(`http://localhost:8080/api/vendas/dashboard`);
+    const resumo = await resposta.json();
+    preencheTotal(resumo)
+}
+
 // ======================= PREENCHIMENTOS ========================================
 function preencherTabela(vendas) {
     const tbody = document.querySelector("#tabela-vendas tbody");
@@ -105,10 +111,12 @@ function preencherTabela(vendas) {
     });
 }
 
-function preencheTotal() {
+function preencheTotal(resumo) {
     mostrandoVendas.total = resumo.totalProdutos;
 
-    document.getElementById("texto-mostrando-produtos").textContent = `Mostrando ${mostrandoVendas.inicio} - ${mostrandoVendas.fim} de ${mostrandoVendas.total} produtos`
+    document.getElementById("valor-totalVendas").textContent = resumo.totalProdutos
+    document.getElementById("valor-valor-total").textContent = `R$${resumo.valorTotal.toFixed(2)}`
+    document.getElementById("texto-mostrando-produtos").textContent = `Mostrando ${mostrandoVendas.inicio} - ${mostrandoVendas.fim} de ${mostrandoVendas.total} vendas`
     let restoDivisao = mostrandoVendas.total % size
     if (restoDivisao === 0) document.getElementById("btn4").textContent = Math.floor(mostrandoVendas.total / size)
     else document.getElementById("btn4").textContent = Math.floor(mostrandoVendas.total / size) + 1

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fatec.erp.model.dto.DadosVenda;
 import br.com.fatec.erp.model.dto.DashboardEstoqueResumo;
+import br.com.fatec.erp.model.dto.DashboardVendasResumo;
 import br.com.fatec.erp.model.dto.EstoqueProdutoValidade;
 import br.com.fatec.erp.model.dto.LoteDTO;
 import br.com.fatec.erp.model.dto.VendaProdutoDTO;
@@ -80,4 +81,10 @@ public class ApiController {
         var vendas = vendaService.listarVendas(pageable);
         return vendas;
     }
+
+    //TODO, Corrigir o dashboard da tela de vendas
+    /*@GetMapping("/vendas/dashboard")
+    public DashboardVendasResumo resumoVendas(){
+        return vendaService.buscarResumo();
+    }*/
 }
