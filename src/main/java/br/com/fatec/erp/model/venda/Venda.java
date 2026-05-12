@@ -36,7 +36,7 @@ public class Venda {
     }
 
     public void aumentaTotal(BigDecimal valor) {
-        this.total = this.total.add(valor);
+        total = total.add(valor);
     }
 
 
