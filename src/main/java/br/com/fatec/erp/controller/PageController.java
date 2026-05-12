@@ -92,15 +92,21 @@ public class PageController {
         return "meus-dados";
     }
 
-
     @GetMapping("/error")
-    public String erro(@AuthenticationPrincipal UsuarioSecurity usuarioSecurity) {
+    public String erro() {
         return "error";
     }
+
     @GetMapping("/venda/registro")
     public String registroVenda(@AuthenticationPrincipal UsuarioSecurity usuario, Model model){
         model.addAttribute("usuario", usuario.getUsuario());
         return "registro-venda";
+    }
+
+    @GetMapping("/balanco-financeiro")
+    public String balancoFinanceiro(@AuthenticationPrincipal UsuarioSecurity usuario, Model model) {
+        model.addAttribute("usuario", usuario.getUsuario());
+        return "balanco-financeiro";
     }
 
 }
