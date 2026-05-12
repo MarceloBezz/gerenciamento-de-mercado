@@ -2,7 +2,7 @@
 let valorFiltro = "", valorStatus = ""
 const btn1 = document.getElementById("btn1")
 const btn4 = document.getElementById("btn4")
-const linkSelected = document.getElementById("link-estoque")
+const linkSelected = document.getElementById("link-vendas")
 const filtroProduto = document.getElementById("filtro-produto")
 const btnLimparFiltro = document.querySelector(".btn-limpar-filtro")
 const selectStatus = document.querySelector(".filtro-status")
@@ -123,6 +123,7 @@ function preencheTotal(resumo) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    linkSelected.classList.add("active");
     carregarVendas();
     preencheTotal();
 });

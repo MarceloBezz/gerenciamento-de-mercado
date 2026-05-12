@@ -7,6 +7,12 @@ let totalPages = 0;
 let valorFiltro = "";
 let valorStatus = "";
 
+const linkSelected = document.getElementById("link-registro-venda");
+
+document.addEventListener("DOMContentLoaded", () => {
+    linkSelected.classList.add("active");
+});
+
 // ================= MODAL =================
 window.abrirPopup = function () {
   document.getElementById("popup").style.display = "flex";
