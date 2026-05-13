@@ -34,7 +34,7 @@ function moverAtivoMais() {
                     page = Number(botoes[i + 1].textContent) - 1;
                 }
                 carregarVendas();
-                alterarTextoMostrandoVendasmostrandoVendas(1)
+                alterarTextoMostrandoVendas(1)
             }
             break;
         }
@@ -50,15 +50,15 @@ function moverAtivoMenos() {
                 botoes[i].classList.remove("pagina-ativa");
                 botoes[i - 1].classList.add("pagina-ativa");
                 page = Number(botoes[i - 1].textContent) - 1;
-                carregarProdutos();
-                alterarTextoMostrandoVendasmostrandoVendas(-1)
+                carregarVendas();
+                alterarTextoMostrandoVendas(-1)
             } else if (i === 1 && (Number(botoes[i].textContent) > 1)) {
                 for (let j = 1; j <= 3; j++) {
                     botoes[j].textContent = Number(botoes[j].textContent) - 1
                 }
                 page = Number(botoes[i].textContent) - 1;
                 carregarVendas();
-                alterarTextoMostrandoVendasmostrandoVendas(-1)
+                alterarTextoMostrandoVendas(-1)
             }
             break;
         }
@@ -75,7 +75,7 @@ function selecionarBotao(botaoSelecionado) {
             carregarVendas();
 
             const diferenca = Number(botaoSelecionado.textContent) - Number(botao.textContent)
-            alterarTextoMostrandoVendasmostrandoVendas(diferenca)
+            alterarTextoMostrandoVendas(diferenca)
         }
     })
 }
@@ -85,13 +85,14 @@ async function carregarVendas() {
     const resposta = await fetch(url);
     const vendas = await resposta.json();
     preencherTabela(vendas.content);
+    preencheTotal(vendas.totalElements);
 }
 
-async function carregaResumoVendas() {
+/* async function carregaResumoVendas() {
     const resposta = await fetch(`http://localhost:8080/api/vendas/dashboard`);
     const resumo = await resposta.json();
     preencheTotal(resumo)
-}
+} */
 
 // ======================= PREENCHIMENTOS ========================================
 function preencherTabela(vendas) {
@@ -112,18 +113,21 @@ function preencherTabela(vendas) {
 }
 
 function preencheTotal(resumo) {
-    mostrandoVendas.total = resumo.totalProdutos;
-
-    document.getElementById("valor-totalVendas").textContent = resumo.totalProdutos
-    document.getElementById("valor-valor-total").textContent = `R$${resumo.valorTotal.toFixed(2)}`
-    document.getElementById("texto-mostrando-produtos").textContent = `Mostrando ${mostrandoVendas.inicio} - ${mostrandoVendas.fim} de ${mostrandoVendas.total} vendas`
+    mostrandoVendas.total = resumo;
+    document.getElementById("texto-mostrando-vendas").textContent = `Mostrando ${mostrandoVendas.inicio} - ${mostrandoVendas.fim} de ${mostrandoVendas.total} vendas`
     let restoDivisao = mostrandoVendas.total % size
     if (restoDivisao === 0) document.getElementById("btn4").textContent = Math.floor(mostrandoVendas.total / size)
     else document.getElementById("btn4").textContent = Math.floor(mostrandoVendas.total / size) + 1
 }
 
+function alterarTextoMostrandoVendas(valor) {
+    mostrandoVendas.inicio += (size * valor)
+    mostrandoVendas.fim += (size * valor)
+    document.getElementById("texto-mostrando-vendas").textContent = `Mostrando ${mostrandoVendas.inicio} - ${mostrandoVendas.fim} de ${mostrandoVendas.total} vendas`
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    linkSelected.classList.add("active");
     carregarVendas();
-    preencheTotal();
+    btn1.classList.add("pagina-ativa");
+    linkSelected.classList.add("active");
 });

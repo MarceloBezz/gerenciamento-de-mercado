@@ -146,3 +146,8 @@ main {
 .paginacao button:hover {
     background: #e5e7eb;
 }
+
+.pagina-ativa {
+    background: #2563eb !important;
+    color: white;
+}
