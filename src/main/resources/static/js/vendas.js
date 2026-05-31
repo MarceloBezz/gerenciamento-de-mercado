@@ -105,7 +105,7 @@ function preencherTabela(vendas) {
                 <td>${item.idVenda}</td>
                 <td>${item.total}</td>
                 <td>${item.idVendedor}</td>
-                <td>${item.data}</td>
+                <td>${item.dataVenda}</td>
             </tr>
         `;
         tbody.insertAdjacentHTML("beforeend", linha);
