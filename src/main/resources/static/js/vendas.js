@@ -95,7 +95,6 @@ function preencherTabela(vendas) {
     const tbody = document.querySelector("#tabela-vendas tbody");
     tbody.innerHTML = "";
     vendas.forEach(item => {
-        //TODO, implementar tela pop-up com produtos da venda
         const linha = `
             <tr>
                 <td>${item.idVenda}</td>
@@ -114,12 +113,12 @@ function preencherTabela(vendas) {
 }
 
 window.abrirPopup = function (idVenda) {
-  document.getElementById("popup").style.display = "flex";
-  carregarTabelaModal(idVenda);
+    document.getElementById("popup").style.display = "flex";
+    carregarTabelaModal(idVenda);
 };
 
 window.fecharPopup = function () {
-  document.getElementById("popup").style.display = "none";
+    document.getElementById("popup").style.display = "none";
 };
 
 // ================= RENDERIZAR MODAL =================
@@ -145,6 +144,25 @@ function carregarTabelaModal(idVenda) {
 
         tbody.insertAdjacentHTML("beforeend", linha);
     });
+}
+//TODO, melhorar essa implementação
+function listarData() {
+    const dataInicial = document.getElementById("dataInicial").value;
+    const dataFinal = document.getElementById("dataFinal").value;
+
+    const vendasFiltradas = vendasCarregadas.filter(venda => {
+        const dataVenda = venda.dataVenda;
+
+        return (!dataInicial || dataVenda >= dataInicial) &&
+            (!dataFinal || dataVenda <= dataFinal);
+    });
+    preencherTabela(vendasFiltradas);
+}
+
+function limparFiltro(){
+    document.getElementById("dataInicial").value = "";
+    document.getElementById("dataFinal").value = "";
+    carregarVendas();
 }
 
 function preencheTotal(resumo) {

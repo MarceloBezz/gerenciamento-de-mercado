@@ -29,12 +29,13 @@
 
             <section class="barra-acoes">
                 <label class="texto-barra">De:</label>
-                <input type="date" name="data">
+                <input id="dataInicial" type="date" name="data">
 
                 <label>Ate:</label>
-                <input type="date" name="data">
+                <input id="dataFinal" type="date" name="data">
 
-                <button class="btn-buscar" type="submit">Buscar</button>
+                <button onclick="listarData()" class="btn-buscar" type="submit">Buscar</button>
+                <button onclick="limparFiltro()" class="btn-limpar" type="submit">Limpar</button>
             </section>
 
             <section class="tabela-vendas">
