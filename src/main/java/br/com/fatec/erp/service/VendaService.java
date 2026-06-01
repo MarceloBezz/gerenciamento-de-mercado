@@ -40,7 +40,7 @@ public class VendaService {
     public DadosVenda cadastrar(Usuario vendedor, List<VendaProdutoDTO> dtos) {
         //Usuario vendedor = usuarioRepository.findById(2L).get();
         Venda venda = new Venda(vendedor);
-
+        
         for (VendaProdutoDTO dto : dtos) {
             Produto produto = produtoRepository.findById(dto.idProduto()).orElseThrow();
             Estoque estoque = estoqueRepository.findByProduto(produto).orElseThrow();

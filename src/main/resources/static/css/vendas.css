@@ -84,6 +84,15 @@ main {
     background: #f9fafb;
 }
 
+.btn-informacoes {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 /* ===== RODAPÉ DA TABELA ===== */
 .rodape-tabela {
     margin-top: 15px;
@@ -151,3 +160,100 @@ main {
     background: #2563eb !important;
     color: white;
 }
+
+
+
+ /* POPUP */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      width: 700px;
+      max-width: 90%;
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close {
+      cursor: pointer;
+      color: #666;
+    }
+
+    .produto-qtd {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .small-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 8px;
+      background: #e5e7eb;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    /*tabela do modal*/
+        table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 16px;
+      border-bottom: 1px solid #e6e6e6;
+      text-align: left;
+    }
+
+    th {
+      color: #445;
+      background: #f7f9fc;
+    }
+
+    .qtd-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /*Botões de abrir produtos*/
+    .btn-produtos {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-produtos:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.btn-produtos:active {
+    transform: translateY(0);
+}
+    

@@ -83,10 +83,4 @@ public class ApiController {
         var vendas = vendaService.listarVendas(pageable);
         return vendas;
     }
-
-    //TODO, Corrigir o dashboard da tela de vendas
-    /*@GetMapping("/vendas/dashboard")
-    public DashboardVendasResumo resumoVendas(){
-        return vendaService.buscarResumo();
-    }*/
 }
