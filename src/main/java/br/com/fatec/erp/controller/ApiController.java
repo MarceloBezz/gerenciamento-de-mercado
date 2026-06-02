@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosEntradaSaida;
 import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosLucro;
 import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosProdutos;
 import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosVendedores;
+import br.com.fatec.erp.security.UsuarioSecurity;
 import br.com.fatec.erp.service.EstoqueService;
 import br.com.fatec.erp.service.FinanceiroService;
 import br.com.fatec.erp.service.LoteService;
@@ -75,9 +77,10 @@ public class ApiController {
 
     // ================= GESTÃO DE VENDAS =================
     @PostMapping("/vendas")
-    public ResponseEntity<?> cadastrarVenda(@RequestBody List<VendaProdutoDTO> dtos) {
+    public ResponseEntity<?> cadastrarVenda(@AuthenticationPrincipal UsuarioSecurity usuarioLogado, @RequestBody List<VendaProdutoDTO> dtos) {
+
         try {
-            var venda = vendaService.cadastrar(dtos);
+            var venda = vendaService.cadastrar(usuarioLogado.getUsuario(), dtos);
             return ResponseEntity.ok().body(venda);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

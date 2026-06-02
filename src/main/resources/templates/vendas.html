@@ -27,30 +27,15 @@
                 </div>
             </header>
 
-            <section class="cards">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Total de vendas</h3>
-                    </div>
-                    <p id="valor-totalVendas"></p>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Valor Total</h3>
-                    </div>
-                    <p id="valor-valor-total"></p>
-                </div>
-            </section>
-
             <section class="barra-acoes">
                 <label class="texto-barra">De:</label>
-                <input type="date" name="data">
+                <input id="dataInicial" type="date" name="data">
 
                 <label>Ate:</label>
-                <input type="date" name="data">
+                <input id="dataFinal" type="date" name="data">
 
-                <button class="btn-buscar" type="submit">Buscar</button>
+                <button onclick="listarData()" class="btn-buscar" type="submit">Buscar</button>
+                <button onclick="limparFiltro()" class="btn-limpar" type="submit">Limpar</button>
             </section>
 
             <section class="tabela-vendas">
@@ -61,6 +46,7 @@
                             <th>Valor</th>
                             <th>Vendedor</th>
                             <th>Data</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,6 +71,32 @@
 
             </section>
         </section>
+        <!-- MODAL -->
+        <div class="modal" id="popup" style="display:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>Produtos vendidos</span>
+                    <span class="close" onclick="fecharPopup()">✖</span>
+                </div>
+
+
+                <table class="tabela-produtos-vendidos">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Qtd</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-produtos-vendidos-modal"></tbody>
+                </table>
+                <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                    <button id="btn-prev" onclick="paginaAnterior()">⬅</button>
+                    <button id="btn-next" onclick="proximaPagina()">➡</button>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 <script th:src="@{/js/home.js}"></script>

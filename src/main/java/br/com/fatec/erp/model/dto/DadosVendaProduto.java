@@ -8,12 +8,13 @@ import java.util.List;
 public record DadosVendaProduto(
         Long produtoId,
         Integer quantidade,
+        String nomeProduto,
         BigDecimal valor
 ) {
     static List<DadosVendaProduto> retornaLista(List<VendaProduto> itens) {
         return itens
                 .stream()
-                .map(item -> new DadosVendaProduto(item.getId().getProdutoId(), item.getQuantidade(), item.getValor()))
+                .map(item -> new DadosVendaProduto(item.getId().getProdutoId(), item.getQuantidade(), item.getProduto().getNome(), item.getValor()))
                 .toList();
     }
 }

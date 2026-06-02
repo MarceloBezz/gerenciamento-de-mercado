@@ -234,7 +234,7 @@ window.finalizarVenda = async function () {
     const response = await fetch("http://localhost:8080/api/vendas", {
       method: "POST",
       headers: headers,
-      body: JSON.stringify(dtos)
+      body: JSON.stringify(dtos, )
     });
 
     if (response.ok) {
