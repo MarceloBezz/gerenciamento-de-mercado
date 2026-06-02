@@ -1,123 +1,178 @@
-// const opcaoMes = document.getElementById("periodo");
-const opcaoSemana = document.getElementById("semana");
 const linkSelected = document.getElementById("link-balanco-financeiro");
+const selectMes = document.getElementById("mes");
+const inputAno = document.getElementById("ano");
+const checkboxFiltrar = document.getElementById("filtrarPor");
+const btnFiltrar = document.querySelector(".btn-filtrar");
+const totalEntradaEl = document.getElementById("totalEntradas");
+const totalSaidaEl = document.getElementById("totalSaidas");
+const totalLucroEl = document.getElementById("totalLucro");
+const totalProdutosVendidosEl = document.getElementById("totalProdutosVendidos");
+
+let graficoEntradasSaidas;
+let graficoVendedores;
+let graficoProdutos;
+let graficoLucro;
+let graficoParticipacao;
 
 document.addEventListener("DOMContentLoaded", () => {
     linkSelected.classList.add("active");
-})
+    inicializarGraficos();
+    // Por padrão carrega dados do ano atual inteiro (sem parâmetros)
+    carregarDadosFinanceiros().catch(error => console.error('Erro ao carregar dados financeiros:', error));
 
-function bloqueiaOpcao() {
-    console.log(opcaoMes.value)
-    if (opcaoMes.value === "semanal") {
-        opcaoSemana.disabled = false;
-    } else {
-        opcaoSemana.disabled = true;
+    // Habilita/desabilita controles quando checkbox muda
+    checkboxFiltrar?.addEventListener('change', () => {
+        const checked = checkboxFiltrar.checked;
+        if (selectMes) selectMes.disabled = !checked;
+        if (inputAno) inputAno.disabled = !checked;
+    });
+
+    btnFiltrar?.addEventListener("click", () => carregarDadosFinanceiros().catch(error => console.error('Erro ao carregar dados financeiros:', error)));
+});
+
+async function carregarDadosFinanceiros() {
+    // Se o usuário não marcou "Filtrar por:", solicita os dados do ano atual inteiro (sem query string)
+    let query = '';
+    if (checkboxFiltrar && checkboxFiltrar.checked) {
+        const mes = Number(selectMes?.value) || (new Date().getMonth() + 1);
+        const ano = Number(inputAno?.value) || (new Date().getFullYear());
+        query = `?mes=${mes}&ano=${ano}`;
+    }
+    const responses = await Promise.allSettled([
+        fetchJson(`/api/financeiro/semanal${query}`),
+        fetchJson(`/api/financeiro/vendedores${query}`),
+        fetchJson(`/api/financeiro/produtos${query}`),
+        fetchJson(`/api/financeiro/lucro${query}`)
+    ]);
+
+    const [entradasSaidas, vendedores, produtos, lucro] = responses.map(result => result.status === 'fulfilled' ? result.value : null);
+
+    if (entradasSaidas) {
+        atualizarGraficoEntradasSaidas(entradasSaidas);
+    }
+
+    if (vendedores) {
+        atualizarGraficoVendedores(vendedores);
+        atualizarGraficoParticipacao(vendedores);
+    }
+
+    if (produtos) {
+        atualizarGraficoProdutos(produtos);
+    }
+
+    if (lucro) {
+        atualizarGraficoLucro(lucro);
+    }
+
+    preencherCards(entradasSaidas, produtos, lucro);
+}
+
+async function fetchJson(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+    }
+    return response.json();
+}
+
+function formatCurrency(value) {
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(value);
+}
+
+function safeSum(values = []) {
+    return values.reduce((acc, current) => acc + Number(current || 0), 0);
+}
+
+function preencherCards(entradasSaidas, produtos, lucro) {
+    if (entradasSaidas && totalEntradaEl && totalSaidaEl) {
+        const entradaTotal = safeSum(entradasSaidas.entradas);
+        const saidaTotal = safeSum(entradasSaidas.saidas);
+
+        totalEntradaEl.innerHTML = `<strong style="color: #2E7D32">${formatCurrency(entradaTotal)}</strong>`;
+        totalSaidaEl.innerHTML = `<strong style="color: #C62828">${formatCurrency(saidaTotal)}</strong>`;
+    }
+
+    if (lucro && totalLucroEl) {
+        const lucroTotal = safeSum(lucro.lucro);
+        totalLucroEl.innerHTML = `<strong style="color: #6A1B9A">${formatCurrency(lucroTotal)}</strong>`;
+    }
+
+    if (produtos && totalProdutosVendidosEl) {
+        const totalProdutos = safeSum(produtos.quantidade);
+        totalProdutosVendidosEl.innerHTML = `<strong style="color: #EF6C00">${totalProdutos}</strong>`;
     }
 }
-// opcaoMes.addEventListener("change", bloqueiaOpcao)
 
-// ========================= DADOS =========================
-// TODO: GET /api/financeiro/semanal
-const dadosEntradasSaidas = {
-    labels: ["Semana 1","Semana 2","Semana 3","Semana 4"],
-    entradas: [12000,15000,11000,18000],
-    saidas: [8000,9000,7000,9500]
-};
+function inicializarGraficos() {
+    graficoEntradasSaidas = new Chart(document.getElementById("graficoEntradasSaidas"), {
+        type: "bar",
+        data: {
+            labels: [],
+            datasets: [
+                { label: "Entradas", data: [], backgroundColor: '#4CAF50' },
+                { label: "Saídas", data: [], backgroundColor: '#F44336' }
+            ]
+        },
+        options: { responsive: true }
+    });
 
-// TODO: GET /api/financeiro/vendedores
-const dadosVendedores = {
-    labels: ["João","Maria","Carlos","Ana", "Vínicius"],
-    vendas: [25000,18000,15000,22000, 100000]
-};
+    graficoVendedores = new Chart(document.getElementById("graficoVendedores"), {
+        type: "bar",
+        data: { labels: [], datasets: [{ label: "Faturamento", data: [], backgroundColor: '#2196F3' }] },
+        options: { responsive: true }
+    });
 
-// TODO: GET /api/financeiro/produtos
-const dadosProdutos = {
-    labels: ["Semana 1","Semana 2","Semana 3","Semana 4"],
-    quantidade: [120,150,100,190]
-};
+    graficoProdutos = new Chart(document.getElementById("graficoProdutos"), {
+        type: "bar",
+        data: { labels: [], datasets: [{ label: "Produtos vendidos", data: [], backgroundColor: '#FF9800' }] },
+        options: { responsive: true }
+    });
 
-// TODO: GET /api/financeiro/lucro
-const dadosLucro = {
-    labels: ["Semana 1","Semana 2","Semana 3","Semana 4"],
-    lucro: [4000,6000,4000,8500]
-};
+    graficoLucro = new Chart(document.getElementById("graficoLucro"), {
+        type: "line",
+        data: { labels: [], datasets: [{ label: "Lucro líquido", data: [], tension: 0.3, borderColor: '#9C27B0', backgroundColor: 'rgba(156,39,176,0.1)' }] },
+        options: { responsive: true }
+    });
 
-// ========================= GRÁFICOS =========================
-// GRÁFICO 1 — Entradas vs Saídas
-new Chart(document.getElementById("graficoEntradasSaidas"), {
-    type: "bar",
-    data: {
-        labels: dadosEntradasSaidas.labels,
-        datasets: [
-            {
-                label: "Entradas",
-                data: dadosEntradasSaidas.entradas
-            },
-            {
-                label: "Saídas",
-                data: dadosEntradasSaidas.saidas
-            }
-        ]
-    },
-    options: {
-        responsive: true
-    }
-});
+    graficoParticipacao = new Chart(document.getElementById("graficoParticipacao"), {
+        type: "doughnut",
+        data: { labels: [], datasets: [{ data: [], backgroundColor: ['#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#F44336'] }] },
+        options: { responsive: true }
+    });
+}
 
-// GRÁFICO 2 — Vendas por vendedor
-new Chart(document.getElementById("graficoVendedores"), {
-    type: "bar",
-    data: {
-        labels: dadosVendedores.labels,
-        datasets: [
-            {
-                label: "Faturamento",
-                data: dadosVendedores.vendas
-            }
-        ]
-    },
-    options: {
-        responsive: true
-    }
-});
+function atualizarGraficoEntradasSaidas(dados) {
+    graficoEntradasSaidas.data.labels = dados.labels;
+    graficoEntradasSaidas.data.datasets[0].data = dados.entradas;
+    graficoEntradasSaidas.data.datasets[1].data = dados.saidas;
+    graficoEntradasSaidas.update();
+}
 
-// GRÁFICO 3 — Produtos vendidos
-new Chart(document.getElementById("graficoProdutos"), {
-    type: "bar",
-    data: {
-        labels: dadosProdutos.labels,
-        datasets: [
-            {
-                label: "Produtos vendidos",
-                data: dadosProdutos.quantidade
-            }
-        ]
-    },
-    options: {
-        responsive: true
-    }
-});
+function atualizarGraficoVendedores(dados) {
+    graficoVendedores.data.labels = dados.labels;
+    graficoVendedores.data.datasets[0].data = dados.vendas;
+    graficoVendedores.update();
+}
 
-// GRÁFICO 4 — Lucro mensal
-new Chart(document.getElementById("graficoLucro"), {
-    type: "line",
-    data: {
-        labels: dadosLucro.labels,
-        datasets: [{
-            label: "Lucro líquido",
-            data: dadosLucro.lucro,
-            tension: 0.3
-        }]
-    }
-});
+function atualizarGraficoProdutos(dados) {
+    graficoProdutos.data.labels = dados.labels;
+    graficoProdutos.data.datasets[0].data = dados.quantidade;
+    graficoProdutos.update();
+}
 
-// GRÁFICO 5 — Participação por vendedor 
-new Chart(document.getElementById("graficoParticipacao"), {
-    type: "doughnut",
-    data: {
-        labels: dadosVendedores.labels,
-        datasets: [{
-            data: dadosVendedores.vendas
-        }]
-    }
-});
+function atualizarGraficoLucro(dados) {
+    graficoLucro.data.labels = dados.labels;
+    graficoLucro.data.datasets[0].data = dados.lucro;
+    graficoLucro.update();
+}
+
+function atualizarGraficoParticipacao(dados) {
+    graficoParticipacao.data.labels = dados.labels;
+    graficoParticipacao.data.datasets[0].data = dados.vendas;
+    graficoParticipacao.update();
+}

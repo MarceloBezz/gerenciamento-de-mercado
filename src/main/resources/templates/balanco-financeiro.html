@@ -19,75 +19,56 @@
         <section class="cards">
             <div class="card">
                 <h3>Entrada total</h3>
-                <p></p>
+                <p id="totalEntradas">...</p>
             </div>
 
             <div class="card">
                 <h3>Saída total</h3>
-                <p></p>
+                <p id="totalSaidas">...</p>
             </div>
 
             <div class="card">
                 <h3>Lucro:</h3>
-                <p></p>
+                <p id="totalLucro">...</p>
             </div>
 
             <div class="card">
                 <h3>Produtos vendidos</h3>
-                <p></p>
+                <p id="totalProdutosVendidos">...</p>
             </div>
         </section>
         <section class="filtros-financeiros">
 
-            <!-- <div class="filtro">
-                <label for="periodo">Período</label>
-                <select id="periodo">
-                    <option value="todos">Todos</option>
-                    <option value="mensal">Mensal</option>
-                    <option value="semanal">Semanal</option>
-                </select>
-            </div> -->
+            <div class="filtro-filtrar-por">
+                <label>
+                    <input type="checkbox" id="filtrarPor"> Filtrar por:
+                </label>
+            </div>
 
             <div class="filtro">
                 <label for="mes">Mês</label>
-                <select id="mes">
-                    <option>Janeiro</option>
-                    <option>Fevereiro</option>
-                    <option>Março</option>
-                    <option>Abril</option>
-                    <option>Maio</option>
-                    <option>Junho</option>
-                    <option>Julho</option>
-                    <option>Agosto</option>
-                    <option>Setembro</option>
-                    <option>Outubro</option>
-                    <option>Novembro</option>
-                    <option>Dezembro</option>
+                <select id="mes" disabled>
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
                 </select>
             </div>
 
             <div class="filtro">
-                <label for="semana">Semana</label>
-                <select id="semana">
-                    <option value="1">Semana 1</option>
-                    <option value="2">Semana 2</option>
-                    <option value="3">Semana 3</option>
-                    <option value="4">Semana 4</option>
-                </select>
+                <label for="ano">Ano</label>
+                <input id="ano" type="number" min="2000" max="2100" value="${T(java.time.LocalDate).now().year}" disabled />
             </div>
 
-            <div class="filtro">
-                <label for="vendedor">Vendedor</label>
-                <select id="vendedor">
-                    <option>Todos</option>
-                    <option>João</option>
-                    <option>Maria</option>
-                    <option>Carlos</option>
-                    <option>Ana</option>
-                </select>
-            </div>
-
-            <button class="btn-filtrar">Filtrar</button>
+            <button class="btn-filtrar" type="button">Filtrar</button>
 
         </section>
 

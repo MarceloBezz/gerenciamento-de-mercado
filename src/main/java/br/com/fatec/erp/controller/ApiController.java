@@ -17,7 +17,12 @@ import br.com.fatec.erp.model.dto.DashboardEstoqueResumo;
 import br.com.fatec.erp.model.dto.EstoqueProdutoValidade;
 import br.com.fatec.erp.model.dto.LoteDTO;
 import br.com.fatec.erp.model.dto.VendaProdutoDTO;
+import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosEntradaSaida;
+import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosLucro;
+import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosProdutos;
+import br.com.fatec.erp.model.dto.dashboardFinanceiro.DadosVendedores;
 import br.com.fatec.erp.service.EstoqueService;
+import br.com.fatec.erp.service.FinanceiroService;
 import br.com.fatec.erp.service.LoteService;
 import br.com.fatec.erp.service.VendaService;
 import jakarta.validation.Valid;
@@ -28,14 +33,17 @@ public class ApiController {
     private final LoteService loteService;
     private final EstoqueService estoqueService;
     private final VendaService vendaService;
+    private final FinanceiroService financeiroService;
 
-    public ApiController(LoteService loteService, EstoqueService estoqueService, VendaService vendaService) {
+    public ApiController(LoteService loteService, EstoqueService estoqueService, VendaService vendaService,
+                         FinanceiroService financeiroService) {
         this.loteService = loteService;
         this.estoqueService = estoqueService;
         this.vendaService = vendaService;
+        this.financeiroService = financeiroService;
     }
 
-    // ================= DASHBOARD FINANCEIRO =================
+    // ================= ESTOQUE =================
     @GetMapping("/financeiro/dashboard")
     public Page<EstoqueProdutoValidade> listarProdutos(Pageable pageable, @RequestParam(required = false) String produto,
                                                        @RequestParam(required = false) String status) {
@@ -49,8 +57,9 @@ public class ApiController {
 
     // ================= ENTRADAS E SAIDAS =================
     @GetMapping("/financeiro/entradas-saidas")
-    public void listarEntradasESaidas(@RequestParam(required = false) String periodo) {
-        // TODO Implementar método
+    public DadosEntradaSaida listarEntradasESaidas(@RequestParam(required = false) Integer mes,
+                                                   @RequestParam(required = false) Integer ano) {
+        return financeiroService.buscarEntradasESaidas(mes, ano);
     }
 
     // ================= GESTÃO DE LOTES =================
@@ -75,15 +84,34 @@ public class ApiController {
         }
     }
 
-     @GetMapping("/vendas")
-    public Page<DadosVenda> listarVendas(Pageable pageable ){
+    @GetMapping("/vendas")
+    public Page<DadosVenda> listarVendas(Pageable pageable) {
         var vendas = vendaService.listarVendas(pageable);
         return vendas;
     }
 
-    //TODO, Corrigir o dashboard da tela de vendas
-    /*@GetMapping("/vendas/dashboard")
-    public DashboardVendasResumo resumoVendas(){
-        return vendaService.buscarResumo();
-    }*/
+    // ================= DASHBOARD FINANCEIRO =================
+    @GetMapping("/financeiro/semanal")
+    public DadosEntradaSaida dadosEntradasSaidas(@RequestParam(required = false) Integer mes,
+                                                 @RequestParam(required = false) Integer ano) {
+        return financeiroService.buscarEntradasESaidas(mes, ano);
+    }
+
+    @GetMapping("/financeiro/vendedores")
+    public DadosVendedores dadosVendedores(@RequestParam(required = false) Integer mes,
+                                           @RequestParam(required = false) Integer ano) {
+        return financeiroService.buscarVendasPorVendedor(mes, ano);
+    }
+
+    @GetMapping("/financeiro/produtos")
+    public DadosProdutos dadosProdutos(@RequestParam(required = false) Integer mes,
+                                       @RequestParam(required = false) Integer ano) {
+        return financeiroService.buscarQuantidadePorProduto(mes, ano);
+    }
+
+    @GetMapping("/financeiro/lucro")
+    public DadosLucro dadosLucro(@RequestParam(required = false) Integer mes,
+                                 @RequestParam(required = false) Integer ano) {
+        return financeiroService.buscarLucroSemanal(mes, ano);
+    }
 }
