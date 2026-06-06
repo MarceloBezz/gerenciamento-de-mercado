@@ -10,7 +10,7 @@ let valorStatus = "";
 const linkSelected = document.getElementById("link-registro-venda");
 
 document.addEventListener("DOMContentLoaded", () => {
-    linkSelected.classList.add("active");
+  linkSelected.classList.add("active");
 });
 
 // ================= MODAL =================
@@ -90,10 +90,10 @@ function renderizarProdutosModal(lista) {
           >
         </td>
         <td>
-          <button onclick="adicionarNaCompra(${produto.id}, \`${produto.nome}\`, ${valor}, ${estoque})">
-            Adicionar
+          <button class="btn-adicionar-produto" onclick="adicionarNaCompra(${produto.id}, '${produto.nome}', ${valor}, ${estoque})">
+          Adicionar
           </button>
-        </td>
+<       /td>
       </tr>
     `;
 
@@ -134,7 +134,10 @@ window.adicionarNaCompra = function (id, nome, valor, estoque) {
   }
 
   atualizarTabelaVenda();
-  fecharPopup();
+
+  if (document.getElementById(`qtd-${id}`)) {
+    document.getElementById(`qtd-${id}`).value = '';
+  }
 };
 
 // ================= TABELA VENDA =================
@@ -170,41 +173,41 @@ function atualizarTabelaVenda() {
   document.getElementById("valor-total").textContent = `R$ ${totalVenda.toFixed(2)}`;
 }
 
-window.editarQuantidade = function(id, novaQtd) {
+window.editarQuantidade = function (id, novaQtd) {
   const item = itensVenda.find(i => i.id === id);
   const qtd = parseInt(novaQtd);
 
   if (qtd > item.estoque) {
     alert("Quantidade maior que o estoque!");
-    atualizarTabelaVenda(); 
+    atualizarTabelaVenda();
     return;
   }
-  
+
   if (qtd <= 0) {
-      itensVenda = itensVenda.filter(i => i.id !== id);
+    itensVenda = itensVenda.filter(i => i.id !== id);
   } else {
-      item.quantidade = qtd;
+    item.quantidade = qtd;
   }
-  
+
   atualizarTabelaVenda();
 };
 
 // ================= PAGINAÇÃO =================
-window.proximaPagina = function() {
+window.proximaPagina = function () {
   if (page < totalPages - 1) {
     page++;
     carregarProdutosModal();
   }
 };
 
-window.paginaAnterior = function() {
+window.paginaAnterior = function () {
   if (page > 0) {
     page--;
     carregarProdutosModal();
   }
 };
 
-window.atualizarBotoesPaginacao = function() {
+window.atualizarBotoesPaginacao = function () {
   const btnPrev = document.getElementById("btn-prev");
   const btnNext = document.getElementById("btn-next");
 
@@ -234,7 +237,7 @@ window.finalizarVenda = async function () {
     const response = await fetch("http://localhost:8080/api/vendas", {
       method: "POST",
       headers: headers,
-      body: JSON.stringify(dtos, )
+      body: JSON.stringify(dtos,)
     });
 
     if (response.ok) {
