@@ -1,5 +1,6 @@
 package br.com.fatec.erp.service;
 
+import br.com.fatec.erp.exception.LoteInvalidoException;
 import br.com.fatec.erp.model.Estoque;
 import br.com.fatec.erp.model.Lote;
 import br.com.fatec.erp.model.Produto;
@@ -22,15 +23,19 @@ public class LoteService {
         this.estoqueRepository = estoqueRepository;
     }
 
-    @Transactional
-    public Lote cadastrar(LoteDTO dto) {
-        Produto produto = produtoRepository.findById(dto.produtoID())
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
-        Lote lote = loteRepository.save(new Lote(dto, produto));
-        Estoque estoque = estoqueRepository.findByProduto(produto).get();
-        estoque.setQuantidade(estoque.getQuantidade() + dto.quantidade());
-        return lote;
+@Transactional
+public Lote cadastrar(LoteDTO dto) {
+    if (dto.quantidade() == null || dto.quantidade() <= 0) {
+        throw new LoteInvalidoException("Erro: A quantidade do lote precisa ser maior que zero!");
     }
+    Produto produto = produtoRepository.findById(dto.produtoID())
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
+            
+    Lote lote = loteRepository.save(new Lote(dto, produto));
+    Estoque estoque = estoqueRepository.findByProduto(produto).get();
+    estoque.setQuantidade(estoque.getQuantidade() + dto.quantidade());
+    return lote;
+}
 
     @Transactional
     public void substituirLote(Long id, LoteDTO dto) {

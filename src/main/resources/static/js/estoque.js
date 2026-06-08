@@ -248,7 +248,6 @@ document.getElementById("form-lote").addEventListener("submit", async function (
     const token = document.querySelector('meta[name="_csrf"]').getAttribute("content");
     const header = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
 
-
     const resposta = await fetch("/api/lote", {
         method: "POST",
         headers: {
@@ -257,10 +256,11 @@ document.getElementById("form-lote").addEventListener("submit", async function (
         },
         body: JSON.stringify(payload)
     });
+
     if (!resposta.ok) {
         const erro = await resposta.text();
-        alert("Erro ao cadastrar Lote!")
-        console.error(erro)
+        alert(erro || "Erro inesperado ao cadastrar o lote. Verifique os dados e tente novamente.");
+        console.error(erro);
         return;
     }
 
