@@ -8,7 +8,7 @@
   <!-- TOKENS CSRF PARA SEGURANÇA -->
   <meta name="_csrf" th:content="${_csrf?.token}"/>
   <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" th:href="@{/css/registro-venda.css}">
   <link rel="stylesheet" th:href="@{/css/fragments.css}">
   <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
@@ -62,7 +62,8 @@
           placeholder="Filtrar por ID ou Nome"
           style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc;"
         />
-        <button onclick="filtrarProdutos()">Buscar</button>
+          <button class="btn-buscar" onclick="filtrarProdutos()"><i class="bi bi-search"></i> Buscar</button>
+           <button class="btn-limpar-filtro" onclick="limparFiltro()"><i class="bi bi-eraser-fill"></i>Limpar filtros</button>  
       </div>
 
       <table>
@@ -78,10 +79,21 @@
         </thead>
         <tbody id="lista-produtos-modal"></tbody>
       </table>
-        <div style="display:flex; justify-content:space-between; margin-top:10px;">
-          <button id="btn-prev" onclick="paginaAnterior()">⬅</button>
-          <button id="btn-next" onclick="proximaPagina()">➡</button>
-       </div>
+        <section class="rodape-tabela">
+
+                <p id="texto-mostrando-produtos"></p>
+
+                <div class="paginacao">
+                    <button onclick="moverAtivoMenos()">&lt;</button>
+                    <button id="btn1" onclick="selecionarBotao(this)">1</button>
+                    <button id="btn2" onclick="selecionarBotao(this)">2</button>
+                    <button id="btn3" onclick="selecionarBotao(this)">3</button>
+                    <span>...</span>
+                    <button id="btn4" onclick="selecionarBotao(this)"></button>
+                    <button onclick="moverAtivoMais()">&gt;</button>
+                </div>
+
+            </section>
     </div>
   </div>
   <script th:src="@{/js/registro-venda.js}"></script>
